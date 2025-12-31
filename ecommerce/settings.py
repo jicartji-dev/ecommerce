@@ -43,10 +43,12 @@ ALLOWED_HOSTS = ["ecommerce-vjkj.onrender.com",".onrender.com",]
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-
-
 if not User.objects.filter(username="admin").exists():
-    User.objects.create_superuser("admin", "admin@example.com", "admin123")
+    User.objects.create_superuser(
+        username="AdaShu4536",
+        email="jicartji@gmail.com",
+        password="Ada453685Shu"
+    )
 
 
 # DATABASE = PostgreSQL (Render)
