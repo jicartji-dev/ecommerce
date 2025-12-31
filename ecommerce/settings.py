@@ -32,7 +32,14 @@ SECRET_KEY = 'django-insecure-=ds(+cog7_-hm@%q0*o!mw*#b7xilme1e*@ntk@_r$wkdg+yd=
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ["ecommerce-vjkj.onrender.com"]
+ALLOWED_HOSTS = ["https://ecommerce-vjkj.onrender.com/"]
+# DEBUG = True  # local development
+
+# ALLOWED_HOSTS = [
+#     "127.0.0.1",
+#     "localhost",
+# ]
+
 # DATABASE = PostgreSQL (Render)
 
 # Application definition
