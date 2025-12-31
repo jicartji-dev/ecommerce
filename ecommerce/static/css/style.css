@@ -1,0 +1,267 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f8f9fa;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+}
+
+.nav-link {
+    color: #333 !important;
+}
+
+.nav-link:hover {
+    color: #198754 !important;
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+}
+
+/* Product Card */
+.product-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    height: 260px;
+    object-fit: cover;
+}
+
+.product-price {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn-view {
+    background: #000;
+    color: #fff;
+    border-radius: 25px;
+}
+
+.btn-view:hover {
+    background: #333;
+}
+
+/* Product Detail */
+.product-image {
+    border-radius: 20px;
+}
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #25d366;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 32px;
+    line-height: 60px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.whatsapp-float:hover {
+    background: #1ebe57;
+}
+
+/* Hero section start */
+
+/* === HERO CAROUSEL (CUSTOM) === */
+
+.hero-carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.hero-track {
+    display: flex;
+    transition: transform 0.45s ease-in-out;
+}
+
+.hero-slide {
+    min-width: 100%;
+    height: 220px;
+    /* MOBILE DEFAULT */
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Amazon-style */
+    display: block;
+}
+
+/* ===== MOBILE (<= 576px) ===== */
+@media (max-width: 576px) {
+    .hero-slide {
+        height: 220px;
+    }
+}
+
+/* ===== TABLET (577px – 991px) ===== */
+@media (min-width: 577px) and (max-width: 991px) {
+    .hero-slide {
+        height: 320px;
+    }
+}
+
+/* ===== DESKTOP (992px – 1399px) ===== */
+@media (min-width: 992px) {
+    .hero-slide {
+        height: 460px;
+        /* FIXES DESKTOP CUTTING */
+    }
+}
+
+/* ===== LARGE DESKTOP (>= 1400px) ===== */
+@media (min-width: 1400px) {
+    .hero-slide {
+        height: 520px;
+        max-height: 520px;
+    }
+}
+
+/* ===== DOTS ===== */
+.hero-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.hero-dots span {
+    width: 7px;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.hero-dots .active {
+    background: #ffffff;
+}
+/* Hero section end */
+
+
+
+.fade-in {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.size-btn {
+    min-width: 45px;
+    font-weight: 600;
+}
+
+.size-btn.active {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.color-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid #ddd;
+    margin-right: 6px;
+}
+
+.color-circle.active {
+    border: 3px solid #000;
+}
+
+.color-circle:hover {
+    border-color: #000;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.new-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+.discount {
+    color: green;
+    font-weight: 600;
+}
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff3f6c;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    z-index: 10;
+}
+
+
+
+/* footer section */
+.footer {
+    background: #fff;
+    padding: 50px 0 20px;
+    border-top: 1px solid #eee;
+}
+
+.footer-link {
+    color: #333;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: #198754;
+}
+
+.social-icons a {
+    font-size: 20px;
+    color: #333;
+    margin-right: 12px;
+}
+
+.social-icons a:hover {
+    color: #198754;
+}

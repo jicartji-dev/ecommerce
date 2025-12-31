@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}About CartJi{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">About CartJi</h2>
+        <p class="text-muted">
+            Add to Cart. Add to Life.
+        </p>
+    </div>
+
+    <div class="row align-items-center">
+
+        <div class="col-md-6 mb-4">
+            <img src="{% static 'images/banner.jpg' %}" class="img-fluid rounded">
+        </div>
+
+        <div class="col-md-6">
+            <p>
+                CartJi is a modern shopping platform that connects you directly
+                with premium products through WhatsApp.
+            </p>
+            <p>
+                We believe in transparency, quality, and fast communication —
+                no complicated checkout, no delays.
+            </p>
+            <p class="fw-semibold">
+                Browse. Select. Chat. Order.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

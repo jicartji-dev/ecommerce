@@ -1,0 +1,98 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}CartJi – Premium WhatsApp Shopping{% endblock %}
+{% block meta_description %}
+Shop premium products and order directly on WhatsApp. Fast & trusted.
+{% endblock %}
+{% block content %}
+
+
+<!-- HERO CAROUSEL -->
+<div class="hero-carousel">
+    <div class="hero-track" id="carouselTrack">
+
+        <div class="hero-slide">
+            <img src="{% static 'images/slider/slide1.jpg' %}">
+        </div>
+
+        <div class="hero-slide">
+            <img src="{% static 'images/slider/slide2.jpg' %}">
+        </div>
+
+        <div class="hero-slide">
+            <img src="{% static 'images/slider/slide3.jpg' %}">
+        </div>
+
+        <div class="hero-slide">
+            <img src="{% static 'images/slider/slide4.jpg' %}">
+        </div>
+
+        <div class="hero-slide">
+            <img src="{% static 'images/slider/slide5.jpg' %}">
+        </div>
+
+    </div>
+
+    <div class="hero-dots" id="carouselDots"></div>
+</div>
+
+
+
+
+
+
+<h3 class="fw-bold mb-3" id="products">Featured Products</h3>
+
+<div class="row g-4">
+    {% for product in products %}
+    <div class="col-lg-3 col-md-4 col-sm-6 fade-in">
+        <div class="card product-card">
+            {% if product.discount_price %}
+            <span class="discount-badge">
+                {{ product.discount_percentage }}% OFF
+            </span>
+            {% endif %}
+            <img src="{{ product.images.first.image.url }}">
+            <div class="card-body">
+                <h6>{{ product.name }}</h6>
+                {% if product.discount_price %}
+                <p class="product-price mb-0">
+                    <del class="text-muted small">₹{{ product.original_price }}</del>
+                    <strong>₹{{ product.selling_price }}</strong>
+                </p>
+                {% else %}
+                <p class="product-price">
+                    ₹{{ product.original_price }}
+                </p>
+                {% endif %}
+                <a href="{{ product.get_absolute_url }}" class="btn btn-view w-100">
+                    View
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<!-- TRUST SECTION -->
+<div class="row text-center mt-5">
+    <div class="col-md-4">
+        <i class="fa fa-shipping-fast fa-2x mb-2"></i>
+        <h6>Fast Response</h6>
+        <p>Quick replies on WhatsApp</p>
+    </div>
+    <div class="col-md-4">
+        <i class="fa fa-star fa-2x mb-2"></i>
+        <h6>Quality Products</h6>
+        <p>Verified & trusted items</p>
+    </div>
+    <div class="col-md-4">
+        <i class="fa fa-lock fa-2x mb-2"></i>
+        <h6>Secure Ordering</h6>
+        <p>Direct WhatsApp conversation</p>
+    </div>
+</div>
+
+{% endblock %}
