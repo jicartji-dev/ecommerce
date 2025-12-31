@@ -31,12 +31,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=ds(+cog7_-hm@%q0*o!mw*#b7xilme1e*@ntk@_r$wkdg+yd='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
 DEBUG = False
-DEBUG = os.environ.get("DEBUG") == "True"
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["ecommerce-vjkj.onrender.com"]
+DATABASE = PostgreSQL (Render)
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 # Application definition
 
 INSTALLED_APPS = [
@@ -90,11 +88,20 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-    )
-}
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL')
+        )
+    }
+
 
 
 
@@ -136,14 +143,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [ BASE_DIR / 'static' , os.path.join(BASE_DIR, 'static'),]
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MIDDLEWARE.insert(
     1,
