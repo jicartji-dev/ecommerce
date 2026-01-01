@@ -9,4 +9,4 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "Starting Gunicorn..."
-gunicorn ecommerce.wsgi
+gunicorn ecommerce.wsgi:application
