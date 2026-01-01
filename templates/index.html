@@ -53,7 +53,7 @@ Shop premium products and order directly on WhatsApp. Fast & trusted.
                 {{ product.discount_percentage }}% OFF
             </span>
             {% endif %}
-            <img src="{{ product.images.first.image.url }}">
+            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
             <div class="card-body">
                 <h6>{{ product.name }}</h6>
                 {% if product.discount_price %}
