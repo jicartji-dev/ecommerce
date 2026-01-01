@@ -45,6 +45,8 @@ ALLOWED_HOSTS = [".onrender.com",]
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary',
+    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,8 +54,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'cloudinary',
-    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [

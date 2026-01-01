@@ -131,7 +131,7 @@ class Product(models.Model):
 
 
 
-
+from cloudinary.models import CloudinaryField
 
 class ProductImage(models.Model):
     product = models.ForeignKey(
@@ -139,7 +139,8 @@ class ProductImage(models.Model):
         on_delete=models.CASCADE,
         related_name='images'
     )
-    image = models.ImageField(upload_to='products/')
+    # image = models.ImageField(upload_to='products/')
+    image = CloudinaryField('image')
     color = models.ForeignKey(
         Color,
         on_delete=models.SET_NULL,
