@@ -27,15 +27,6 @@ import os
 
 
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.environ.get("CLOUDINARY_API_KEY"),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
-)
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,26 +40,7 @@ SECRET_KEY = 'django-insecure-=ds(+cog7_-hm@%q0*o!mw*#b7xilme1e*@ntk@_r$wkdg+yd=
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ["ecommerce-vjkj.onrender.com",".onrender.com",]
-# DEBUG = True  # local development
-
-# ALLOWED_HOSTS = [
-#     "127.0.0.1",
-#     "localhost",
-# ]
-
-# from django.contrib.auth import get_user_model
-# User = get_user_model()
-
-# if not User.objects.filter(username="admin").exists():
-#     User.objects.create_superuser(
-#         username="AdaShu4536",
-#         email="jicartji@gmail.com",
-#         password="Ada453685Shu"
-#     )
-
-
-# DATABASE = PostgreSQL (Render)
+ALLOWED_HOSTS = [".onrender.com",]
 
 # Application definition
 
@@ -193,3 +165,13 @@ MIDDLEWARE.insert(
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
