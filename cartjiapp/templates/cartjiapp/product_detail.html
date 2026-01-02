@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'cartjiapp/base.html' %}
 {% block title %}{{ product.name }} – CartJi{% endblock %}
 {% block meta_description %}
 Buy {{ product.name }} at best price. Order directly on WhatsApp.
@@ -15,10 +15,11 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
         <h2 class="fw-bold">{{ product.name }}</h2>
         <div class="mt-3">
             <h6>Select Color</h6>
-        
+
             {% for img in product.images.all %}
             <span class="color-circle" data-color="{{ img.color.name }}"
-                style="background-color: {{ img.color.code|default:'#ccc' }}" onclick="selectColor(this, '{{ img.image.url }}')">
+                style="background-color: {{ img.color.code|default:'#ccc' }}"
+                onclick="selectColor(this, '{{ img.image.url }}')">
             </span>
             {% endfor %}
         </div>
@@ -26,7 +27,7 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
         {% if product.sizes.all %}
         <div class="mt-4">
             <h6>Select Size</h6>
-        
+
             <div class="d-flex gap-2 flex-wrap">
                 {% for size in product.sizes.all %}
                 <button type="button" class="btn btn-outline-dark size-btn" data-size="{{ size.name }}"
@@ -35,7 +36,7 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
                 </button>
                 {% endfor %}
             </div>
-        
+
             <!-- hidden input to store selected size -->
             <input type="hidden" id="selectedSize">
         </div>

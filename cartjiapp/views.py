@@ -6,22 +6,22 @@ from .models import Category, Product, SubCategory
 
 def home(request):
     products = Product.objects.filter(is_active=True)
-    return render(request, 'index.html', {'products': products})
+    return render(request, 'cartjiapp/index.html', {'products': products})
 
 def product_list(request):
     products = Product.objects.filter(is_active=True)
-    return render(request, 'product_list.html', {
+    return render(request, 'cartjiapp/product_list.html', {
         'products': products
     })
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
-    return render(request, 'product_detail.html', {'product': product})
+    return render(request, 'cartjiapp/product_detail.html', {'product': product})
 
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(category=category, is_active=True)
-    return render(request, 'product_list.html', {
+    return render(request, 'cartjiapp/product_list.html', {
         'category': category,
         'products': products
     })
@@ -34,7 +34,7 @@ def subcategory_products(request, category_slug, sub_slug):
         subcategory=subcategory,
         is_active=True
     )
-    return render(request, 'product_list.html', {
+    return render(request, 'cartjiapp/product_list.html', {
         'category': category,
         'subcategory': subcategory,
         'products': products
@@ -50,7 +50,7 @@ def load_subcategories(request):
 
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'cartjiapp/about.html')
 
 def contact(request):
-    return render(request, 'contact.html')
+    return render(request, 'cartjiapp/contact.html')
