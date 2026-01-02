@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cartjiapp','cartjiapp.apps.CartjiappConfig',
 
-    'cartjiapp.apps.CartjiappConfig',
+    
 ]
 
 
