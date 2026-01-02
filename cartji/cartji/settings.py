@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cartji1.wsgi.application'
+WSGI_APPLICATION = 'cartji.wsgi.application'
 
 
 # Database
