@@ -150,25 +150,18 @@ MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / 'media'
 
 # =========================
-# STATIC FILES (RENDER SAFE)
+# STATIC FILES (FINAL)
 # =========================
 
+from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = "/static/"
 
-# DO NOT use STATICFILES_DIRS when static/ is beside manage.py
-# Django finds src/static automatically
-
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-]
 
 
 CLOUDINARY_STORAGE = {
