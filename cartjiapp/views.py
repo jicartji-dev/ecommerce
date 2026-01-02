@@ -55,7 +55,3 @@ def about(request):
 def contact(request):
     return render(request, 'cartjiapp/contact.html')
 
-def nav_categories(request):
-    return {
-        "nav_categories": Category.objects.all()
-    }
