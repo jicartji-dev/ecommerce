@@ -6,3 +6,5 @@ django-storages
 boto3
 cloudinary
 django-cloudinary-storage
+
+whitenoise
