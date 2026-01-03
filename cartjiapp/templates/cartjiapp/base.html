@@ -64,7 +64,7 @@
                         <ul class="dropdown-menu">
                             {% for sub in cat.subcategories.all %}
                             <li><a class="dropdown-item" href="{% url 'subcategory_products' cat.slug sub.slug %}">{{
-                                    sub.name }}</a></li>
+                                    subcategory.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>
