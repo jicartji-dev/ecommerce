@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Product, SubCategory
-
+from django.http import HttpResponse
 
 
 def home(request):
@@ -54,4 +54,7 @@ def about(request):
 
 def contact(request):
     return render(request, 'cartjiapp/contact.html')
+
+def health(request):
+    return HttpResponse("OK")
 
