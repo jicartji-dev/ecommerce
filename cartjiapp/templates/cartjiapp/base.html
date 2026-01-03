@@ -59,7 +59,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle fw-semibold" href="{% url 'category_products' cat.slug %}"
                             role="button" data-bs-toggle="dropdown">
-                            {{ cat.name }}{{ cat.objects.all }}
+                            {{ cat.name }}
                         </a>
                         <ul class="dropdown-menu">
                             {% for sub in cat.subcategories.all %}
