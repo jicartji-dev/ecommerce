@@ -33,7 +33,8 @@
 
             <!-- Brand -->
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <img src="{% static 'cartjiapp/images/logobg.jpg' %}" alt="CartJi" style="height:60px; margin-right:10px;">
+                <img src="{% static 'cartjiapp/images/logobg.jpg' %}" alt="CartJi"
+                    style="height:60px; margin-right:10px;">
             </a>
 
 
@@ -62,9 +63,11 @@
                             {{ cat }}
                         </a>
                         <ul class="dropdown-menu">
-                            {% for sub in cat.subcategories.all %}
+                            {% for sub in nav_subcategories %}
+                            {% if sub.category  == cat %}
                             <li><a class="dropdown-item" href="{% url 'subcategory_products' cat.slug sub.slug %}">{{
                                     sub.name }}</a></li>
+                            {% endif %}
                             {% endfor %}
                         </ul>
                     </li>
@@ -112,7 +115,8 @@
                 <div class="col-md-4">
                     <h6 class="fw-bold">Follow Us</h6>
                     <div class="social-icons">
-                        <a href="https://www.instagram.com/cart.ji/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/cart.ji/" target="_blank"><i
+                                class="fab fa-instagram"></i></a>
                         <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
                         <a href="https://wa.me/918303278845" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
