@@ -64,10 +64,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             {% for sub in nav_subcategories %}
-                            {% if sub.category  == cat %}
+                            {% if cat.name in sub.category %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'subcategory_products' cat.slug sub.slug %}">
-                                {{ sub }}</a>
+                                {{ sub.name }}</a>
                             </li>
                             {% endif %}
                             {% endfor %}
