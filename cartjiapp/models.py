@@ -73,7 +73,7 @@ class Product(models.Model):
         blank=True
     )
 
-    name = models.CharField(max_length=200)
+    name = models.CharField()
     slug = models.SlugField(unique=True, blank=True)
     sizes = models.ManyToManyField(Size, blank=True)
     
