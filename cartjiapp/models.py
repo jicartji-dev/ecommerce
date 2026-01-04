@@ -73,7 +73,7 @@ class Product(models.Model):
         blank=True
     )
 
-    name = models.CharField()
+    name = models.TextField()
     slug = models.SlugField(unique=True, blank=True)
     sizes = models.ManyToManyField(Size, blank=True)
     
