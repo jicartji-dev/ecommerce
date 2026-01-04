@@ -265,3 +265,18 @@ body {
 .social-icons a:hover {
     color: #198754;
 }
+
+
+.product-description ul {
+    padding-left: 18px;
+}
+
+.product-description li {
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.product-description h6 {
+    color: #000;
+    font-size: 15px;
+}
