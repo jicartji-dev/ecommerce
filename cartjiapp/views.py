@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 
 def home(request):
-    products = Product.objects.filter(is_active=True)
+    products = Product.objects.filter(is_active=True).order_by('-created_at')
     return render(request, 'cartjiapp/index.html', {'products': products})
 
 def product_list(request):
