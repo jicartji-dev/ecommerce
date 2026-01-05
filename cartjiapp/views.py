@@ -20,7 +20,7 @@ def product_detail(request, slug):
 
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
-    products = Product.objects.filter(category=category, is_active=True)
+    products = Product.objects.filter(category=category, is_active=True).order_by('-created_at')
     return render(request, 'cartjiapp/product_list.html', {
         'category': category,
         'products': products
@@ -33,7 +33,7 @@ def subcategory_products(request, category_slug, sub_slug):
         category=category,
         subcategory=subcategory,
         is_active=True
-    )
+    ).order_by('-created_at')
     return render(request, 'cartjiapp/product_list.html', {
         'category': category,
         'subcategory': subcategory,
