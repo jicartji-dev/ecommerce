@@ -9,7 +9,7 @@ def home(request):
     return render(request, 'cartjiapp/index.html', {'products': products})
 
 def product_list(request):
-    products = Product.objects.filter(is_active=True)
+    products = Product.objects.filter(is_active=True).order_by('-created_at')
     return render(request, 'cartjiapp/product_list.html', {
         'products': products
     })
