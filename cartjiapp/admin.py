@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
     Category,
+    Review,
     SubCategory,
     Size,
     Color,
@@ -50,3 +51,9 @@ class ColorAdmin(admin.ModelAdmin):
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
     list_display = ("product", "size", "color")
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ("id", "rating", "is_active", "created_at")
+    list_filter = ("rating", "is_active")
+

@@ -1,21 +1,18 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#198754">
 
     <title>{% block title %}CartJi – Premium Products{% endblock %}</title>
 
     <meta name="description"
         content="{% block meta_description %}Shop premium products and order directly via WhatsApp.{% endblock %}">
 
-    <meta name="keywords" content="CartJi, online shopping, whatsapp shopping, premium products">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- FAVICON -->
-    <link rel="icon" type="image/x-icon" href="{% static 'cartjiapp/images/url-logo/favicon.ico' %}">
-    <!-- <link rel="icon" href="{% static 'cartjiapp/images/favicon.ico' %}"> -->
+    <link rel="icon" href="{% static 'cartjiapp/images/url-logo/favicon.ico' %}">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,49 +20,69 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Custom CSS -->
+    <!-- Google Font -->
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Main CSS -->
     <link rel="stylesheet" href="{% static 'cartjiapp/css/style.css' %}">
 </head>
 
-<body>
+<body class="site-body">
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+
+    <!-- PREMIUM NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top premium-navbar">
         <div class="container">
 
-            <!-- Brand -->
-            <a class="navbar-brand d-flex align-items-center" href="/">
-                <img src="{% static 'cartjiapp/images/logobg.jpg' %}" alt="CartJi"
-                    style="height:60px; margin-right:10px;">
+            <!-- BRAND -->
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <img src="{% static 'cartjiapp/images/logobg.jpg' %}" alt="CartJi" class="brand-logo">
+                <!-- <div class="d-none d-md-block">
+                    <span class="brand-name">CartJi</span>
+                    <div class="brand-tagline">Add to Cart. Add to Life.</div>
+                </div> -->
             </a>
 
-
-            <!-- Mobile Toggle -->
+            <!-- TOGGLER -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Menu -->
+            <!-- LINKS -->
             <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
 
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="/">Home</a>
+                    <!-- SEARCH -->
+                    <li class="nav-item d-none d-lg-block">
+                        <form action="{% url 'product_list' %}" method="get" class="nav-search">
+                            <i class="fa fa-search"></i>
+                            <input type="text" name="q" placeholder="Search fashion, clothing…">
+                        </form>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="{% url 'product_list' %}">Products</a>
+                        <a class="nav-link active" href="/">Home</a>
                     </li>
 
-                    <!-- Future Categories -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product_list' %}">Shop</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
                     {% for cat in nav_categories %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-semibold" href="{% url 'category_products' cat.slug %}"
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category_products' cat.slug %}">{{ cat.name }}</a>
+                        <!-- <a class="nav-link dropdown-toggle fw-semibold" href="{% url 'category_products' cat.slug %}"
                             data-bs-toggle="dropdown">
                             {{ cat.name }}
-                        </a>
+                        </a> -->
                     
-                        <ul class="dropdown-menu">
+                        <!-- <ul class="dropdown-menu">
                             {% for sub in cat.subcategories.all %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'subcategory_products' cat.slug sub.slug %}">
@@ -75,73 +92,151 @@
                             {% empty %}
                             <li class="dropdown-item text-muted">No subcategories</li>
                             {% endfor %}
-                        </ul>
+                        </ul> -->
                     </li>
                     {% endfor %}
 
+                    <!-- CTA -->
+                    <li class="nav-item ms-lg-2">
+                        <a href="https://wa.me/918303278845" target="_blank" class="btn btn-success nav-whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i> Order Now
+                        </a>
+                    </li>
 
                 </ul>
-
-                <!-- WhatsApp Button -->
-                <a href="https://wa.me/918303278845" class="btn btn-success px-4" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Order
-                </a>
-
             </div>
         </div>
     </nav>
 
-    {% block content %}{% endblock %}
+    <!-- MAIN CONTENT -->
+    <main class="site-main">
+        {% block content %}{% endblock %}
+    </main>
 
-    <!-- FOOTER -->
-    <footer class="footer mt-5">
+    <!-- ADVANCED PREMIUM FOOTER -->
+    <footer class="footer-advanced site-footer">
         <div class="container">
+
             <div class="row gy-4">
-
+                
                 <!-- BRAND -->
-                <div class="col-md-4">
-                    <img src="{% static 'cartjiapp/images/logobg.jpg' %}" style="height:45px;">
-                    <p class="small text-muted mt-3">
-                        Add to Cart. Add to Life.<br>
-                        Premium products with direct WhatsApp ordering.
+                <div class="col-lg-4">
+                    <img  src="{% static 'cartjiapp/images/logobg.jpg' %}" class="footer-logo">
+                    <p class="footer-desc mt-3">
+                        CartJi is a fashion & lifestyle shopping platform where you
+                        discover premium clothing and order instantly via WhatsApp.
                     </p>
-                </div>
 
-                <!-- LINKS -->
-                <div class="col-md-4">
-                    <h6 class="fw-bold">Quick Links</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="/" class="footer-link">Home</a></li>
-                        <li><a href="{% url 'product_list' %}" class="footer-link">Products</a></li>
-                        <li><a href="{% url 'about' %}" class="footer-link">About Us</a></li>
-                        <a href="{% url 'contact' %}" class="footer-link">Contact</a>
-                    </ul>
-                </div>
-
-                <!-- SOCIAL -->
-                <div class="col-md-4">
-                    <h6 class="fw-bold">Follow Us</h6>
-                    <div class="social-icons">
+                    <div class="footer-social">
                         <a href="https://www.instagram.com/cart.ji/" target="_blank"><i
                                 class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="https://wa.me/918303278845" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
 
+                <!-- SHOP -->
+                <!-- SHOP -->
+                <div class="col-6 col-lg-2">
+                    <h6 class="footer-title">Shop</h6>
+                    <ul>
+                        <li>
+                            <a href="{% url 'product_list' %}">
+                                All Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'product_list' %}?sort=new">
+                                New Arrivals
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'product_list' %}?sort=trending">
+                                Trending
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <!-- HELP -->
+                <div class="col-6 col-lg-3">
+                    <h6 class="footer-title">Help</h6>
+                    <ul>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'shipping' %}">Shipping & Delivery</a></li>
+                        <li><a href="{% url 'returns' %}">Returns & Refunds</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- LEGAL -->
+                <div class="col-lg-3">
+                    <h6 class="footer-title">Legal</h6>
+                    <ul>
+                        <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'store_policy' %}">Store Policy</a></li>
+                    </ul>
+
+                </div>
+
             </div>
 
-            <hr>
-            <p class="text-center small text-muted mb-0">
-                © 2025 CartJi. All rights reserved.
-            </p>
+            <hr class="footer-divider">
+
+            <div class="footer-bottom">
+                <span>© {% now "Y" %} CartJi. All rights reserved.</span>
+                <span class="footer-note">Made for fashion lovers 💚</span>
+            </div>
+
         </div>
     </footer>
 
 
-    <!-- Bootstrap JS -->
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/918303278845" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- REVIEW IMAGE MODAL -->
+    <div class="modal fade" id="reviewImageModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <img id="reviewModalImage" src="" alt="Customer review" class="w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'cartjiapp/js/main.js' %}"></script>
+    <script src="{% static 'cartjiapp/js/main.js'  %}"></script>
+    <!-- <script>
+        let index = 0;
+        const track = document.getElementById("heroTrack");
+        const slides = document.querySelectorAll(".hero-slide");
+        const dots = document.getElementById("heroDots");
+
+        slides.forEach((_, i) => {
+            const d = document.createElement("span");
+            if (i === 0) d.classList.add("active");
+            d.onclick = () => move(i);
+            dots.appendChild(d);
+        });
+
+        function move(i) {
+            index = i;
+            track.style.transform = `translateX(-${i * 100}%)`;
+            dots.querySelectorAll("span").forEach(d => d.classList.remove("active"));
+            dots.children[i].classList.add("active");
+        }
+
+        setInterval(() => move((index + 1) % slides.length), 4000);
+    </script> -->
+
 </body>
 
 </html>

@@ -1,22 +1,47 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Product, SubCategory
+from .models import Category, Product, Review, SubCategory
 from django.http import HttpResponse
 
 
 def home(request):
-    products = Product.objects.filter(is_active=True).order_by('-created_at')
-    return render(request, 'cartjiapp/index.html', {'products': products})
+    categories = Category.objects.all()
+    products = Product.objects.filter(is_active=True).order_by('-created_at')[:8]
+    reviews = Review.objects.filter(is_active=True).order_by("-created_at")[:8]
+    return render(request, 'cartjiapp/index.html', {'products': products, "reviews": reviews,"categories":categories})
 
 def product_list(request):
-    products = Product.objects.filter(is_active=True).order_by('-created_at')
-    return render(request, 'cartjiapp/product_list.html', {
-        'products': products
+    sort = request.GET.get("sort")
+    products = Product.objects.filter(is_active=True)
+
+    if sort == "new":
+        products = products.order_by("-created_at")
+
+    elif sort == "trending":
+        products = products.order_by("-views", "-created_at")
+
+    else:
+        products = products.order_by("-created_at")
+
+    return render(request, "cartjiapp/product_list.html", {
+        "products": products
     })
+
+
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
+
+    # 🔥 increment views
+    product.views += 1
+    product.save(update_fields=["views"])
+
     return render(request, 'cartjiapp/product_detail.html', {'product': product})
+
+
+# def product_detail(request, slug):
+#     product = get_object_or_404(Product, slug=slug, is_active=True)
+#     return render(request, 'cartjiapp/product_detail.html', {'product': product})
 
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
@@ -55,6 +80,29 @@ def about(request):
 def contact(request):
     return render(request, 'cartjiapp/contact.html')
 
+def shipping_policy(request):
+    return render(request, "cartjiapp/shipping.html")
+
+def returns_policy(request):
+    return render(request, "cartjiapp/returns.html")
+
+def faq_page(request):
+    return render(request, "cartjiapp/faq.html")
+
+def store_policy(request):
+    return render(request, "cartjiapp/store_policy.html")
+
+def terms(request):
+    return render(request, "cartjiapp/terms.html")
+
+
+def privacy(request):
+    return render(request, "cartjiapp/privacy.html")
+
+
+
 def health(request):
     return HttpResponse("OK")
+
+
 

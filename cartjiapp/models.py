@@ -17,6 +17,22 @@ class Category(models.Model):
                 counter += 1
             self.slug = slug
         super().save(*args, **kwargs)
+    
+    def get_display_image(self):
+        """
+        Returns first product image of this category
+        """
+        first_product = self.products.filter(
+            is_active=True
+        ).order_by("created_at").first()
+
+        if first_product:
+            first_image = first_product.images.first()
+            if first_image:
+                return first_image.image.url
+
+        return None
+
 
     def __str__(self):
         return self.name
@@ -73,7 +89,7 @@ class Product(models.Model):
         blank=True
     )
 
-    name = models.CharField()
+    name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     sizes = models.ManyToManyField(Size, blank=True)
     
@@ -94,6 +110,7 @@ class Product(models.Model):
 
 
     description = models.TextField()
+    views = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -163,3 +180,19 @@ class ProductVariant(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.size} - {self.color}"
+
+
+
+class Review(models.Model):
+    image = models.ImageField(upload_to="reviews/")
+    caption = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="Optional short caption (e.g. Loved the quality!)"
+    )
+    rating = models.PositiveIntegerField(default=5)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review {self.id}"

@@ -7,91 +7,319 @@ Shop premium products and order directly on WhatsApp. Fast & trusted.
 {% block content %}
 
 
-<!-- HERO CAROUSEL -->
-<div class="hero-carousel">
-    <div class="hero-track" id="carouselTrack">
+<!-- HERO SECTION -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
 
-        <div class="hero-slide">
-            <img src="{% static 'cartjiapp/images/slider/slide1.jpg' %}">
+            <!-- LEFT CONTENT -->
+            <div class="col-lg-6">
+                <span class="hero-badge">Premium Fashion Store</span>
+
+                <h1 class="hero-title">
+                    Discover Fashion<br>
+                    That Speaks <span>Your Style</span>
+                </h1>
+
+                <p class="hero-tagline floating-tagline">
+                    Add to Cart. Add to <span class="tagline-accent">Life.</span>
+                </p>
+
+
+                <p class="hero-subtitle">
+                    CartJi brings you premium clothing and fashion essentials.
+                    Browse online and order instantly via WhatsApp.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="{% url 'product_list' %}" class="btn btn-dark hero-btn">
+                        Explore Collection
+                    </a>
+
+                    <a href="https://wa.me/918303278845" target="_blank" class="btn btn-outline-success hero-btn">
+                        <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                    </a>
+                </div>
+
+                <div class="hero-trust">
+                    <span><i class="fa fa-check-circle"></i> Premium Quality</span>
+                    <span><i class="fa fa-truck"></i> Fast Support</span>
+                    <span><i class="fa fa-lock"></i> Secure Orders</span>
+                </div>
+            </div>
+
+            <!-- RIGHT HERO MOVING CAROUSEL -->
+            <div class="col-lg-6 col-12">
+                <div class="hero-visual-carousel">
+
+                    <div class="hero-visual-track">
+                        <img src="{% static 'cartjiapp/images/slider/slide1.jpg' %}" alt="">
+                        <img src="{% static 'cartjiapp/images/slider/slide2.jpg' %}" alt="">
+                        <img src="{% static 'cartjiapp/images/slider/slide3.jpg' %}" alt="">
+                        <img src="{% static 'cartjiapp/images/slider/slide4.jpg' %}" alt="">
+                        <img src="{% static 'cartjiapp/images/slider/slide5.jpg' %}" alt="">
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+
+<!-- SHOP BY CATEGORY -->
+<section class="category-section">
+    <div class="container">
+
+        <div class="section-header text-center">
+            <h2 class="section-title">Shop by Category</h2>
+            <p class="section-subtitle">
+                Explore our curated fashion collections
+            </p>
         </div>
 
-        <div class="hero-slide">
-            <img src="{% static 'cartjiapp/images/slider/slide2.jpg' %}">
+        <div class="row g-4">
+            {% for category in categories %}
+            <!-- Category Card -->
+            <div class="col-md-4 col-6">
+                <a href="{% url 'category_products' category.slug %}" class="category-card">
+                    {% with category.get_display_image as img %}
+                    {% if img %}
+                    <img src="{{ img }}" alt="{{ category.name }}">
+                    {% else %}
+                    <div class="category-placeholder">
+                        {{ category.name }}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    <div class="category-overlay">
+                        <h5>{{ category.name }}</h5>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+
+
+<!-- FEATURED PRODUCTS -->
+<section class="featured-section">
+    <div class="container">
+
+        <!-- Section Heading -->
+        <div class="section-header text-center mb-4">
+            <h2 class="section-title">Featured Products</h2>
+            <p class="section-subtitle">
+                Handpicked styles you’ll love
+            </p>
         </div>
 
-        <div class="hero-slide">
-            <img src="{% static 'cartjiapp/images/slider/slide3.jpg' %}">
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 fade-in">
+
+                <div class="card product-card">
+
+                    {% if product.discount_price %}
+                    <span class="discount-badge">
+                        {{ product.discount_percentage }}% OFF
+                    </span>
+                    {% endif %}
+
+                    <!-- Product Image -->
+                    {% if product.images.first %}
+                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
+                    {% else %}
+                    <img src="{% static 'cartjiapp/images/placeholder.png' %}" alt="No image">
+                    {% endif %}
+
+                    <div class="card-body text-center">
+                        <h6 class="mb-1">{{ product.name }}</h6>
+
+                        {% if product.discount_price %}
+                        <p class="product-price mb-2">
+                            <del class="text-muted small">
+                                ₹{{ product.original_price }}
+                            </del>
+                            <strong> ₹{{ product.selling_price }}</strong>
+                        </p>
+                        {% else %}
+                        <p class="product-price mb-2">
+                            ₹{{ product.original_price }}
+                        </p>
+                        {% endif %}
+
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-view w-100">
+                            View Product
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No featured products available.</p>
+            </div>
+            {% endfor %}
         </div>
 
-        <div class="hero-slide">
-            <img src="{% static 'cartjiapp/images/slider/slide4.jpg' %}">
-        </div>
-
-        <div class="hero-slide">
-            <img src="{% static 'cartjiapp/images/slider/slide5.jpg' %}">
+        <!-- CTA -->
+        <div class="text-center mt-5">
+            <a href="{% url 'product_list' %}" class="btn btn-dark px-5">
+                View All Products
+            </a>
         </div>
 
     </div>
+</section>
 
-    <div class="hero-dots" id="carouselDots"></div>
-</div>
+<!-- WHY CARTJI -->
+<section class="why-cartji-section">
+    <div class="container">
+
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">Why CartJi?</h2>
+            <p class="section-subtitle">
+                More than shopping — it’s a better experience
+            </p>
+        </div>
+
+        <div class="row g-4 text-center">
+
+            <div class="col-md-4 col-12">
+                <div class="why-card">
+                    <i class="fa fa-check-circle"></i>
+                    <h6>Premium Quality</h6>
+                    <p>
+                        Carefully selected clothing with quality you can feel
+                        and styles you’ll love.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12">
+                <div class="why-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <h6>Instant WhatsApp Ordering</h6>
+                    <p>
+                        No complicated checkout. Order directly on WhatsApp
+                        and get quick support.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12">
+                <div class="why-card">
+                    <i class="fa fa-shield-alt"></i>
+                    <h6>Trusted & Secure</h6>
+                    <p>
+                        Transparent pricing, secure communication, and
+                        customer-first service.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
 
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <p class="section-subtitle">Real feedback from real people</p>
+        </div>
 
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <p>“Quality is amazing and ordering on WhatsApp was super easy.”</p>
+                    <h6>— Rahul, Delhi</h6>
+                </div>
+            </div>
 
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <p>“Premium feel, fast response and great support.”</p>
+                    <h6>— Ayesha, Mumbai</h6>
+                </div>
+            </div>
 
-
-<h3 class="fw-bold mb-3 px-2" id="products">Featured Products</h3>
-
-<div class="row g-4">
-    {% for product in products %}
-    <div class="col-lg-3 col-md-4 col-sm-6 col-6 fade-in">
-        <div class="card product-card">
-            {% if product.discount_price %}
-            <span class="discount-badge">
-                {{ product.discount_percentage }}% OFF
-            </span>
-            {% endif %}
-            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-            <div class="card-body">
-                <h6>{{ product.name }}</h6>
-                {% if product.discount_price %}
-                <p class="product-price mb-0">
-                    <del class="text-muted small">₹{{ product.original_price }}</del>
-                    <strong>₹{{ product.selling_price }}</strong>
-                </p>
-                {% else %}
-                <p class="product-price">
-                    ₹{{ product.original_price }}
-                </p>
-                {% endif %}
-                <a href="{{ product.get_absolute_url }}" class="btn btn-view w-100">
-                    View
-                </a>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <p>“Loved the hoodie quality. Totally worth the price.”</p>
+                    <h6>— Aman, Lucknow</h6>
+                </div>
             </div>
         </div>
     </div>
-    {% endfor %}
-</div>
+</section>
+
+<!-- IMAGE REVIEWS CAROUSEL -->
+<section class="testimonial-section">
+    <div class="container">
+
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">Loved by Our Customers</h2>
+            <p class="section-subtitle">Real photos from real buyers</p>
+        </div>
+
+        <div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500"
+            data-bs-pause="hover">
+
+            <div class="carousel-inner">
+
+                {% for review in reviews %}
+                {% if forloop.counter0|divisibleby:3 %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="row justify-content-center g-4">
+                        {% endif %}
+
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="image-review-card" data-bs-toggle="modal" data-bs-target="#reviewImageModal"
+                                data-image="{{ review.image.url }}">
+
+                                <!-- WATERMARK -->
+                                <span class="review-watermark">CartJi Verified</span>
+
+                                <img src="{{ review.image.url }}" alt="Customer review" loading="lazy">
+
+                                {% if review.caption %}
+                                <div class="review-caption">
+                                    {{ review.caption }}
+                                </div>
+                                {% endif %}
+
+                                <div class="review-rating">
+                                    {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %} ⭐ {% else %} ☆ {% endif %} {% endfor %}
+                                        </div>
+                                </div>
+                            </div>
+
+                            {% if forloop.counter|divisibleby:3 or forloop.last %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+</section>
 
 
-<!-- TRUST SECTION -->
-<div class="row text-center mt-5">
-    <div class="col-md-4">
-        <i class="fa fa-shipping-fast fa-2x mb-2"></i>
-        <h6>Fast Response</h6>
-        <p>Quick replies on WhatsApp</p>
-    </div>
-    <div class="col-md-4">
-        <i class="fa fa-star fa-2x mb-2"></i>
-        <h6>Quality Products</h6>
-        <p>Verified & trusted items</p>
-    </div>
-    <div class="col-md-4">
-        <i class="fa fa-lock fa-2x mb-2"></i>
-        <h6>Secure Ordering</h6>
-        <p>Direct WhatsApp conversation</p>
-    </div>
-</div>
 
 {% endblock %}
