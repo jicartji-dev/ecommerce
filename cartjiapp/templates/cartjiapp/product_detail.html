@@ -57,7 +57,7 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
                 <div class="product-option row">
                     <h6>Size</h6>
                     {% for size in product.sizes.all %}
-                    <div class="size-options col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="size-options col-lg-3 col-md-3 col-sm-3 mb-4">
                         <button class="size-btn" onclick="selectSize('{{ size.name }}',this)">
                             {{ size.name }}
                         </button>
