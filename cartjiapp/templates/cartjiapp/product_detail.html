@@ -54,15 +54,15 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
                 <!-- SIZE -->
                 {% if product.sizes.all %}
-                <div class="product-option row">
+                <div class="product-option">
                     <h6>Size</h6>
-                    {% for size in product.sizes.all %}
-                    <div class="size-options col-3">
+                    <div class="size-options">
+                        {% for size in product.sizes.all %}
                         <button class="size-btn" onclick="selectSize('{{ size.name }}',this)">
                             {{ size.name }}
                         </button>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
                 {% endif %}
 

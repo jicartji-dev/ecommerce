@@ -891,19 +891,28 @@ body {
 }
 
 /* SIZE */
+/* SIZE OPTIONS – RESPONSIVE & DYNAMIC */
 .size-options {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
     gap: 10px;
+    max-width: 100%;
 }
 
+/* SIZE BUTTON */
 .size-btn {
-    padding: 6px 14px;
+    padding: 8px 10px;
     border-radius: 20px;
     border: 1.5px solid #ccc;
     background: #fff;
+    font-size: 0.85rem;
+    font-weight: 500;
     cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s ease;
 }
 
+/* ACTIVE STATE */
 .size-btn.active {
     background: #198754;
     color: #fff;
