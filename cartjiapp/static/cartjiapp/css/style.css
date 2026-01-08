@@ -902,7 +902,7 @@ body {
 /* SIZE BUTTON */
 .size-btn {
     padding: 8px 10px;
-    border-radius: 20px;
+    border-radius: 5px;
     border: 1.5px solid #ccc;
     background: #fff;
     font-size: 0.85rem;
