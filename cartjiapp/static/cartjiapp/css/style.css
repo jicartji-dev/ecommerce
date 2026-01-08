@@ -957,9 +957,6 @@ body {
 
 /* MOBILE */
 @media (max-width: 768px) {
-    .product-image-box {
-        height: 300px;
-    }
 
     .product-cta {
         width: 100%;
