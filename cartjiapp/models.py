@@ -1,11 +1,15 @@
+from email.mime import image
 from pickle import TRUE
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from cloudinary.models import CloudinaryField
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
+    image = CloudinaryField('category-image')
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -17,21 +21,6 @@ class Category(models.Model):
                 counter += 1
             self.slug = slug
         super().save(*args, **kwargs)
-    
-    def get_display_image(self):
-        """
-        Returns first product image of this category
-        """
-        first_product = self.products.filter(
-            is_active=True
-        ).order_by("created_at").first()
-
-        if first_product:
-            first_image = first_product.images.first()
-            if first_image:
-                return first_image.image.url
-
-        return None
 
 
     def __str__(self):
@@ -148,7 +137,6 @@ class Product(models.Model):
 
 
 
-from cloudinary.models import CloudinaryField
 
 class ProductImage(models.Model):
     product = models.ForeignKey(

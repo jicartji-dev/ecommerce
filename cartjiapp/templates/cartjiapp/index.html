@@ -17,7 +17,7 @@ Shop premium products and order directly on WhatsApp. Fast & trusted.
                 <span class="hero-badge">Premium Fashion Store</span>
 
                 <h1 class="hero-title">
-                    Discover Fashion<br>
+                    Browse Styles<br>
                     That Speaks <span>Your Style</span>
                 </h1>
 
@@ -88,7 +88,7 @@ Shop premium products and order directly on WhatsApp. Fast & trusted.
                 <a href="{% url 'category_products' category.slug %}" class="category-card">
                     {% with category.get_display_image as img %}
                     {% if img %}
-                    <img src="{{ img }}" alt="{{ category.name }}">
+                    <img src="{{ category.image.category-image.url }}" alt="{{ category.name }}">
                     {% else %}
                     <div class="category-placeholder">
                         {{ category.name }}
@@ -123,44 +123,44 @@ Shop premium products and order directly on WhatsApp. Fast & trusted.
         <div class="row g-4">
             {% for product in products %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-6 fade-in">
+                <a href="{{ product.get_absolute_url }}" class="btn btn-view w-100">
 
-                <div class="card product-card">
-
-                    {% if product.discount_price %}
-                    <span class="discount-badge">
-                        {{ product.discount_percentage }}% OFF
-                    </span>
-                    {% endif %}
-
-                    <!-- Product Image -->
-                    {% if product.images.first %}
-                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
-                    {% else %}
-                    <img src="{% static 'cartjiapp/images/placeholder.png' %}" alt="No image">
-                    {% endif %}
-
-                    <div class="card-body text-center">
-                        <h6 class="mb-1">{{ product.name }}</h6>
+                    <div class="card product-card">
 
                         {% if product.discount_price %}
-                        <p class="product-price mb-2">
-                            <del class="text-muted small">
-                                ₹{{ product.original_price }}
-                            </del>
-                            <strong> ₹{{ product.selling_price }}</strong>
-                        </p>
-                        {% else %}
-                        <p class="product-price mb-2">
-                            ₹{{ product.original_price }}
-                        </p>
+                        <span class="discount-badge">
+                            {{ product.discount_percentage }}% OFF
+                        </span>
                         {% endif %}
 
-                        <a href="{{ product.get_absolute_url }}" class="btn btn-view w-100">
-                            View Product
-                        </a>
-                    </div>
+                        <!-- Product Image -->
+                        {% if product.images.first %}
+                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
+                        {% else %}
+                        <img src="{% static 'cartjiapp/images/placeholder.png' %}" alt="No image">
+                        {% endif %}
 
-                </div>
+                        <div class="card-body text-center">
+                            <h6 class="mb-1">{{ product.name }}</h6>
+
+                            {% if product.discount_price %}
+                            <p class="product-price mb-2">
+                                <del class="text-muted small">
+                                    ₹{{ product.original_price }}
+                                </del>
+                                <strong> ₹{{ product.selling_price }}</strong>
+                            </p>
+                            {% else %}
+                            <p class="product-price mb-2">
+                                ₹{{ product.original_price }}
+                            </p>
+                            {% endif %}
+
+
+                        </div>
+
+                    </div>
+                </a>
 
             </div>
             {% empty %}
