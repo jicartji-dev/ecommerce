@@ -9,7 +9,7 @@ from cloudinary.models import CloudinaryField
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
-    image = CloudinaryField('category-image')
+    image = CloudinaryField('category-image', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
