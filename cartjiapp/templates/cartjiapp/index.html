@@ -86,9 +86,9 @@ Shop premium products and order directly on WhatsApp. Fast & trusted.
             <!-- Category Card -->
             <div class="col-md-4 col-6">
                 <a href="{% url 'category_products' category.slug %}" class="category-card">
-                    {% with category.get_display_image as img %}
+                    {% with category.image as img %}
                     {% if img %}
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                    <img src="{{ image.url }}" alt="{{ category.name }}">
                     {% else %}
                     <div class="category-placeholder">
                         {{ category.name }}
