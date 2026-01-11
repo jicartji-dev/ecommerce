@@ -16,7 +16,7 @@ urlpatterns = [
     ),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
-    path("health/", health),
+    path("health", health),
     path("shipping/", shipping_policy, name="shipping"),
     path("returns/", returns_policy, name="returns"),
     path("faq/", faq_page, name="faq"),
