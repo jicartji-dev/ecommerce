@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from .views import about, career_full_time, career_part_time,category_products, check_coupon, contact, faq_page, health, home, load_subcategories, privacy, product_detail, product_list, returns_policy, shipping_policy, store_policy, subcategory_products, terms
 from django.conf import settings
 from django.conf.urls.static import static
@@ -27,6 +27,9 @@ urlpatterns = [
     path('check-coupon/', check_coupon, name='check_coupon'),
     path('career/part-time/', career_part_time, name='career_part_time'),
     path('career/full-time/', career_full_time, name='career_full_time'),
+
+    # admin urls
+    path("cj-admin/", include("cartjiapp.cj_admin.urls")),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
