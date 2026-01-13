@@ -1,0 +1,39 @@
+{% extends "cj_admin/cj_base.html" %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+<p class="cj-welcome">
+    Welcome {{ request.user.username }} 👋
+</p>
+
+<div class="cj-stats">
+
+    <div class="cj-card">
+        <div class="cj-icon">📦</div>
+        <h4>Products</h4>
+        <p>{{ total_products }}</p>
+    </div>
+
+    <div class="cj-card">
+        <div class="cj-icon">👥</div>
+        <h4>Customers</h4>
+        <p>{{ total_customers }}</p>
+    </div>
+
+    <div class="cj-card">
+        <div class="cj-icon">🛒</div>
+        <h4>Orders</h4>
+        <p>{{ total_orders }}</p>
+    </div>
+
+    <div class="cj-card">
+        <div class="cj-icon">💰</div>
+        <h4>Revenue</h4>
+        <p>₹{{ total_revenue }}</p>
+    </div>
+
+</div>
+
+
+{% endblock %}

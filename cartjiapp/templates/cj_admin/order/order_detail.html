@@ -1,0 +1,21 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
+<h1>Order {{ order.order_id }}</h1>
+
+<p><strong>Name:</strong> {{ order.customer_name }}</p>
+<p><strong>Phone:</strong> {{ order.phone }}</p>
+<p><strong>Address:</strong> {{ order.address }}</p>
+<p><strong>Status:</strong> {{ order.status }}</p>
+<p><strong>Total:</strong> ₹{{ order.total_amount }}</p>
+
+<h3>Items</h3>
+<ul>
+    {% for item in order.items.all %}
+    <li>{{ item.product.name }} × {{ item.quantity }} — ₹{{ item.price }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'cj_orders' %}">← Back to Orders</a>
+
+{% endblock %}

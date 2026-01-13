@@ -1,0 +1,30 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
+<h1>Colors</h1>
+
+<a href="{% url 'cj_color_add' %}" class="cj-btn primary">+ Add Color</a>
+
+<table class="cj-table">
+    <tr>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Action</th>
+    </tr>
+    {% for c in colors %}
+    <tr>
+        <td>{{ c.name }}</td>
+        <td>
+            <span style="background:{{ c.code }};padding:4px 10px;border-radius:4px;color:#fff">
+                {{ c.code }}
+            </span>
+        </td>
+        <td>
+            <a href="{% url 'cj_color_edit' c.id %}" class="cj-btn">Edit</a>
+            <a href="{% url 'cj_color_delete' c.id %}" class="cj-btn danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

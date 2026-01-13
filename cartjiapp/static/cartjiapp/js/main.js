@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function changeProductImage(el) {
     document.getElementById("mainProductImage").src = el.src;
 }
-let selectedSize = "";
-let selectedColor = "";
+let selectedSize = null;
+let selectedColor = null;
 
 function selectSize(size, el) {
     selectedSize = size;
@@ -75,35 +75,6 @@ function selectColor(color, image, el) {
     hideVariantMessage();
 }
 
-function orderOnWhatsApp(productName, price, productUrl) {
-    if (!selectedSize && !selectedColor) {
-        showVariantMessage("Please select size and color");
-        return;
-    }
-
-    if (!selectedSize) {
-        showVariantMessage("Please select a size");
-        return;
-    }
-
-    if (!selectedColor) {
-        showVariantMessage("Please select a color");
-        return;
-    }
-
-    let message =
-        `Hi, I want to order this product :\n\n` +
-        `Product: ${productName}\n` +
-        `Price: ₹${price}\n` +
-        `Size: ${selectedSize}\n` +
-        `Color: ${selectedColor}\n` +
-        `Link: ${productUrl}`;
-
-    const url = `https://wa.me/918303278845?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
-}
-
-
 function showVariantMessage(text) {
     const el = document.getElementById("variantMessage");
     el.innerText = text;
@@ -113,4 +84,152 @@ function showVariantMessage(text) {
 function hideVariantMessage() {
     const el = document.getElementById("variantMessage");
     el.style.display = "none";
+}
+
+
+
+
+
+// function orderOnWhatsApp(name, price, url) {
+//     if (selectedColor === "Not selected" || selectedSize === "Not selected") {
+//         document.getElementById("variantMessage").innerText =
+//             "⚠ Please select color and size before ordering";
+//         return;
+//     }
+//     let coupon = document.getElementById("couponCode").value;
+//     let finalPrice = parseFloat(price);
+
+//     if (coupon.trim() === "") {
+//         openWhatsApp(name, finalPrice, url);
+//         return;
+//     }
+
+//     fetch(`/check-coupon/?code=${coupon}`)
+//         .then(res => res.json())
+//         .then(data => {
+
+//             let modal = new bootstrap.Modal(document.getElementById('couponModal'));
+
+//             if (data.valid) {
+//                 let discountAmount = (finalPrice * data.discount) / 100;
+//                 let discountedPrice = finalPrice - discountAmount;
+
+//                 document.getElementById("modalTitle").innerText = "Coupon Applied 🎉";
+//                 document.getElementById("modalDetails").innerHTML = `
+//     <strong>${name}</strong><br>
+//         Original Price: ₹${finalPrice}<br>
+//             Discount: ₹${discountAmount}<br>
+//                 <strong>Final Price: ₹${discountedPrice}</strong>
+//                 `;
+
+//                 document.getElementById("finalOrderBtn").onclick = function () {
+//                     openWhatsApp(name, discountedPrice, url, coupon);
+//                 };
+
+//             } else {
+//                 document.getElementById("modalTitle").innerText = "Invalid Coupon ❌";
+//                 document.getElementById("modalDetails").innerHTML = `
+//                 Coupon <strong>${coupon}</strong> is not valid.<br>
+//                     Continue without discount?
+//                     `;
+
+//                 document.getElementById("finalOrderBtn").onclick = function () {
+//                     openWhatsApp(name, finalPrice, url);
+//                 };
+//             }
+
+//             modal.show();
+//         });
+// }
+
+
+function orderOnWhatsApp(name, price, url) {
+
+    // ✅ HARD STOP if variant not selected
+    if (!selectedSize || !selectedColor) {
+        showVariantMessage("⚠ Please select size and color before ordering");
+        return;
+    }
+
+    let couponInput = document.getElementById("couponCode");
+    let coupon = couponInput ? couponInput.value.trim() : "";
+
+    let basePrice = parseFloat(price);
+    if (isNaN(basePrice)) {
+        alert("Price error. Please refresh page.");
+        return;
+    }
+
+    // ✅ No coupon → direct WhatsApp
+    if (coupon === "") {
+        openWhatsApp(name, basePrice.toFixed(2), url);
+        return;
+    }
+
+    // ✅ Coupon check
+    fetch(`/check-coupon/?code=${encodeURIComponent(coupon)}`)
+        .then(res => res.json())
+        .then(data => {
+
+            let modal = new bootstrap.Modal(
+                document.getElementById('couponModal')
+            );
+
+            if (data.valid === true) {
+
+                let discountAmount =
+                    (basePrice * data.discount) / 100;
+
+                let discountedPrice =
+                    (basePrice - discountAmount).toFixed(2);
+
+                document.getElementById("modalTitle").innerText =
+                    "Coupon Applied 🎉";
+
+                document.getElementById("modalDetails").innerHTML = `
+<strong>${name}</strong><br>
+Original Price: ₹${basePrice}<br>
+Discount: ₹${discountAmount.toFixed(2)}<br>
+<strong>Final Price: ₹${discountedPrice}</strong>
+                `;
+
+                document.getElementById("finalOrderBtn").onclick = function () {
+                    openWhatsApp(name, discountedPrice, url, coupon);
+                };
+
+            } else {
+
+                document.getElementById("modalTitle").innerText =
+                    "Invalid Coupon ❌";
+
+                document.getElementById("modalDetails").innerHTML = `
+Coupon <strong>${coupon}</strong> is not valid.<br>
+Continue without discount?
+                `;
+
+                document.getElementById("finalOrderBtn").onclick = function () {
+                    openWhatsApp(name, basePrice.toFixed(2), url);
+                };
+            }
+
+            modal.show();
+        });
+}
+
+
+function openWhatsApp(name, price, url, coupon = "") {
+
+    let message =
+        `I want to order this product:
+
+Product: ${name}
+Price: ₹${price}
+Size: ${selectedSize}
+Color: ${selectedColor}
+${coupon ? "Coupon: " + coupon + "\n" : ""}Link: ${url}`;
+
+    window.open(
+        `https://wa.me/918303278845?text=${encodeURIComponent(message)}`,
+        "_blank"
+    );
 }

@@ -1,0 +1,29 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
+<h1>SubCategories</h1>
+
+<a href="{% url 'cj_subcategory_add' %}" class="cj-btn primary">+ Add SubCategory</a>
+
+<table class="cj-table">
+    <tr>
+        <th>Category</th>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Action</th>
+    </tr>
+
+    {% for s in subcategories %}
+    <tr>
+        <td>{{ s.category.name }}</td>
+        <td>{{ s.name }}</td>
+        <td>{{ s.slug }}</td>
+        <td>
+            <a href="{% url 'cj_subcategory_edit' s.id %}" class="cj-btn">Edit</a>
+            <a href="{% url 'cj_subcategory_delete' s.id %}" class="cj-btn danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

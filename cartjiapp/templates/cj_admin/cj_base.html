@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CartJi Custom Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <link rel="stylesheet" href="{% static 'cj_admin/css/cj_admin.css' %}">
+</head>
+
+<body>
+    <button class="cj-mobile-toggle" id="cjToggle">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+
+    <div class="cj-layout">
+
+        <aside class="cj-sidebar">
+            <h2>CartJi Admin</h2>
+
+            <a href="{% url 'cj_dashboard' %}"
+                class="{% if request.resolver_match.url_name == 'cj_dashboard' %}active{% endif %}">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <hr>
+
+            <p class="cj-menu-title">CATALOG</p>
+
+            <a href="{% url 'cj_products' %}"
+                class="{% if request.resolver_match.url_name == 'cj_products' %}active{% endif %}">
+                <i class="fa-solid fa-box"></i>
+                <span>Products</span>
+            </a>
+
+            <a href="{% url 'cj_categories' %}"
+                class="{% if request.resolver_match.url_name == 'cj_categories' %}active{% endif %}">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Categories</span>
+            </a>
+
+            <a href="{% url 'cj_subcategories' %}"
+                class="{% if request.resolver_match.url_name == 'cj_subcategories' %}active{% endif %}">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>SubCategories</span>
+            </a>
+
+            <a href="{% url 'cj_sizes' %}"
+                class="{% if request.resolver_match.url_name == 'cj_sizes' %}active{% endif %}">
+                <i class="fa-solid fa-ruler"></i>
+                <span>Sizes</span>
+            </a>
+
+            <a href="{% url 'cj_colors' %}"
+                class="{% if request.resolver_match.url_name == 'cj_colors' %}active{% endif %}">
+                <i class="fa-solid fa-palette"></i>
+                <span>Colors</span>
+            </a>
+            
+            <a href="{% url 'cj_orders' %}">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Orders</span>
+            </a>
+            <a href="{% url 'cj_coupons' %}">
+                <i class="fa-solid fa-ticket"></i>
+                <span>Coupons</span>
+            </a>
+
+
+            <hr>
+
+            <a href="/">
+                <i class="fa-solid fa-globe"></i>
+                <span>Go to Site</span>
+            </a>
+
+            <a href="{% url 'cj_logout' %}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
+
+
+
+        <main class="cj-content">
+            {% block content %}{% endblock %}
+        </main>
+
+    </div>
+    <script src="{% static 'cj_admin/js/cj_admin.js' %}"></script>
+</body>
+
+</html>

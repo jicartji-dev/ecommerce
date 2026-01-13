@@ -1,0 +1,13 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
+<h1>{{ title }}</h1>
+
+<form method="post" class="cj-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="cj-btn primary">Save</button>
+    <a href="{% url 'cj_colors' %}" class="cj-btn">Back</a>
+</form>
+
+{% endblock %}

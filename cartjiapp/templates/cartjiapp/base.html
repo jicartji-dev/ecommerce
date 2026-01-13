@@ -81,7 +81,7 @@
                             data-bs-toggle="dropdown">
                             {{ cat.name }}
                         </a> -->
-                    
+
                         <!-- <ul class="dropdown-menu">
                             {% for sub in cat.subcategories.all %}
                             <li>
@@ -118,10 +118,10 @@
         <div class="container">
 
             <div class="row gy-4">
-                
+
                 <!-- BRAND -->
                 <div class="col-lg-4">
-                    <img  src="{% static 'cartjiapp/images/logobg.jpg' %}" class="footer-logo">
+                    <img src="{% static 'cartjiapp/images/logobg.jpg' %}" class="footer-logo">
                     <p class="footer-desc mt-3">
                         CartJi is a fashion & lifestyle shopping platform where you
                         discover premium clothing and order instantly via WhatsApp.
@@ -170,8 +170,24 @@
                     </ul>
                 </div>
 
+                <!-- CAREER -->
+                <div class="col-6 col-lg-3">
+<h6 class="footer-title">
+    Career <span class="hiring-badge">We’re Hiring</span>
+</h6>
+                    <ul>
+                        <li>
+                            <a href="{% url 'career_part_time' %}">Part-Time</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'career_full_time' %}">Full-Time</a>
+                        </li>
+                    </ul>
+                </div>
+
+
                 <!-- LEGAL -->
-                <div class="col-lg-3">
+                <div class="col-6 col-lg-3">
                     <h6 class="footer-title">Legal</h6>
                     <ul>
                         <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>

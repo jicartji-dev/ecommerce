@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Product, Review, SubCategory
+from .models import Category, Coupon, Product, Review, SubCategory
 from django.http import HttpResponse
 
 
@@ -98,6 +98,28 @@ def terms(request):
 
 def privacy(request):
     return render(request, "cartjiapp/privacy.html")
+
+def check_coupon(request):
+    code = request.GET.get('code')
+
+    try:
+        coupon = Coupon.objects.get(code__iexact=code, is_active=True)
+        return JsonResponse({
+            "valid": True,
+            "discount": coupon.discount_percent
+        })
+    except Coupon.DoesNotExist:
+        return JsonResponse({
+            "valid": False
+        })
+
+
+def career_part_time(request):
+    return render(request, 'cartjiapp/career_part_time.html')
+
+
+def career_full_time(request):
+    return render(request, 'cartjiapp/career_full_time.html')
 
 
 

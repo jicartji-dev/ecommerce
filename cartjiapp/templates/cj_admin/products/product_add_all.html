@@ -1,0 +1,33 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
+<h1>Add Product</h1>
+
+<form method="post" enctype="multipart/form-data" class="cj-form">
+    {% csrf_token %}
+
+    <h3>Product Info</h3>
+    {{ product_form.as_p }}
+
+    <hr>
+
+    <h3>Product Images</h3>
+    
+    {{ image_formset.management_form }}
+    
+    <div id="image-formset">
+        {% for form in image_formset %}
+        <div class="cj-image-form">
+            {{ form.as_p }}
+        </div>
+        {% endfor %}
+    </div>
+    
+    <button type="button" class="cj-btn" onclick="addImageForm()">
+        + Add Another Image
+    </button>
+
+    <button class="cj-btn primary">Save Product</button>
+</form>
+
+{% endblock %}

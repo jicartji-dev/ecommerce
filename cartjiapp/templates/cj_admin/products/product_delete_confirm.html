@@ -1,0 +1,17 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
+<h1>Delete Product</h1>
+
+<p>
+    Are you sure you want to delete
+    <strong>{{ product.name }}</strong>?
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button class="cj-btn danger">Yes, Delete</button>
+    <a href="{% url 'cj_products' %}" class="cj-btn">Cancel</a>
+</form>
+
+{% endblock %}

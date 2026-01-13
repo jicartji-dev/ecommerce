@@ -5,10 +5,14 @@
 <div class="container my-4">
 
     <!-- PAGE TITLE -->
-    {% if product.views > 20 %}
-    <h3 class="fw-bold mb-4">Trending products customers love</h3>
+    {% if category %}
+    <h3 class="fw-bold mb-4">{{ category.name }}</h3>
+    {% elif subcategory %}
+    <h3 class="fw-bold mb-4">{{ subcategory.name }}</h3>
     {% elif request.GET.sort == "new" %}
     <h3 class="fw-bold mb-4">Latest arrivals just for you</h3>
+    {% elif product.views > 20 %}
+    <h3 class="fw-bold mb-4">Trending products customers love</h3>
     {% else %}
     <h3 class="fw-bold mb-4">All Products</h3>
     {% endif %}

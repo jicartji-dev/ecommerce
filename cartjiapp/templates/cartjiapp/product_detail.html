@@ -72,15 +72,19 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
                 </p>
 
                 <!-- CTA -->
-            <button class="btn btn-success btn-lg product-cta" onclick="orderOnWhatsApp(
+                <div class="mt-3">
+                    <input type="text" id="couponCode" class="form-control" placeholder="Enter coupon code">
+                </div>
+
+                <button class="btn btn-success btn-lg product-cta" onclick="orderOnWhatsApp(
                         '{{ product.name }}',
                         '{% if product.discount_price %}{{ product.selling_price }}{% else %}{{ product.original_price }}{% endif %}',
                         '{{ request.build_absolute_uri }}'
                     )">
-                <i class="fab fa-whatsapp"></i> Order on WhatsApp
-            </button>
-            
-            <p id="variantMessage" class="variant-message"></p>
+                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                </button>
+
+                <p id="variantMessage" class="variant-message"></p>
 
 
                 <!-- TRUST -->
@@ -102,6 +106,25 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
     </div>
 </section>
+
+<div class="modal fade" id="couponModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+
+            <h5 id="modalTitle"></h5>
+            <p id="modalDetails"></p>
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-secondary w-50" data-bs-dismiss="modal">Back</button>
+                <button id="finalOrderBtn" class="btn btn-success w-50">
+                    Order
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 
 

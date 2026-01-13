@@ -1,0 +1,25 @@
+<h2>Edit Order – {{ order.order_id }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Customer Name</label>
+    <input type="text" name="customer_name" value="{{ order.customer_name }}" required>
+
+    <label>Phone</label>
+    <input type="text" name="phone" value="{{ order.phone }}" required>
+
+    <label>Address</label>
+    <textarea name="address" required>{{ order.address }}</textarea>
+
+    <label>Status</label>
+    <select name="status">
+        <option value="pending" {% if order.status == "pending" %}selected{% endif %}>Pending</option>
+        <option value="confirmed" {% if order.status == "confirmed" %}selected{% endif %}>Confirmed</option>
+        <option value="shipped" {% if order.status == "shipped" %}selected{% endif %}>Shipped</option>
+        <option value="delivered" {% if order.status == "delivered" %}selected{% endif %}>Delivered</option>
+    </select>
+
+    <br><br>
+    <button type="submit">Update Order</button>
+</form>

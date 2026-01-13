@@ -1,0 +1,24 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
+<h1>Sizes</h1>
+
+<a href="{% url 'cj_size_add' %}" class="cj-btn primary">+ Add Size</a>
+
+<table class="cj-table">
+    <tr>
+        <th>Name</th>
+        <th>Action</th>
+    </tr>
+    {% for s in sizes %}
+    <tr>
+        <td>{{ s.name }}</td>
+        <td>
+            <a href="{% url 'cj_size_edit' s.id %}" class="cj-btn">Edit</a>
+            <a href="{% url 'cj_size_delete' s.id %}" class="cj-btn danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

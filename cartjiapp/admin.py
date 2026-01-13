@@ -1,6 +1,9 @@
 from django.contrib import admin
 from .models import (
     Category,
+    Coupon,
+    Order,
+    OrderItem,
     Review,
     SubCategory,
     Size,
@@ -57,3 +60,16 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ("id", "rating", "is_active", "created_at")
     list_filter = ("rating", "is_active")
 
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+    list_display = ("code","discount_percent")
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("order_id", "customer_name", "phone", "total_amount", "status", "created_at")
+    list_filter = ("status",)
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ("order", "product", "quantity", "price")

@@ -1,0 +1,50 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
+<h1>Create Order</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <h3>Customer Details</h3>
+    {{ order_form.as_p }}
+
+    <hr>
+
+    <h3>Order Items</h3>
+
+    {{ item_formset.management_form }}
+
+    <div id="items">
+        {% for form in item_formset %}
+        <div class="cj-item-box">
+            {{ form.as_p }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" onclick="addItem()" class="cj-btn">
+        + Add Product
+    </button>
+
+    <br><br>
+    <button class="cj-btn primary">Save Order</button>
+</form>
+
+<script>
+    function addItem() {
+        const items = document.getElementById("items");
+        const totalForms = document.getElementById("id_form-TOTAL_FORMS");
+
+        let count = parseInt(totalForms.value);
+        let newForm = items.children[0].cloneNode(true);
+
+        newForm.innerHTML = newForm.innerHTML.replace(/form-(\d+)-/g, `form-${count}-`);
+        newForm.querySelectorAll("input, select").forEach(el => el.value = "");
+
+        items.appendChild(newForm);
+        totalForms.value = count + 1;
+    }
+</script>
+
+{% endblock %}
