@@ -172,7 +172,8 @@ class ProductVariant(models.Model):
 
 
 class Review(models.Model):
-    image = models.ImageField(upload_to="reviews/")
+    # image = models.ImageField(upload_to="reviews/")
+    image = CloudinaryField('image')
     caption = models.CharField(
         max_length=200,
         blank=True,
