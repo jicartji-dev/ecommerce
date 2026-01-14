@@ -9,8 +9,8 @@ from cloudinary.models import CloudinaryField
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
-    # image = CloudinaryField('category-image', blank=True, null=True)
-    image = models.ImageField(upload_to='products/',null=True)
+    image = CloudinaryField('category-image', blank=True, null=True)
+    # image = models.ImageField(upload_to='products/',null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -145,8 +145,8 @@ class ProductImage(models.Model):
         on_delete=models.CASCADE,
         related_name='images'
     )
-    image = models.ImageField(upload_to='products/')
-    # image = CloudinaryField('image')
+    # image = models.ImageField(upload_to='products/')
+    image = CloudinaryField('image')
     color = models.ForeignKey(
         Color,
         on_delete=models.SET_NULL,
@@ -173,8 +173,8 @@ class ProductVariant(models.Model):
 
 
 class Review(models.Model):
-    image = models.ImageField(upload_to="reviews/")
-    # image = CloudinaryField('image')
+    # image = models.ImageField(upload_to="reviews/")
+    image = CloudinaryField('image')
     caption = models.CharField(
         max_length=200,
         blank=True,
