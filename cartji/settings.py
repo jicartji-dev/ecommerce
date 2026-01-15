@@ -24,7 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6@v+*(9hy654xie=^xx5$t_2bq(kz#2h=6($9vhi(q99$es&9%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://cartji.onrender.com",
+]
+
 
 ALLOWED_HOSTS = ['cartji.onrender.com','127.0.0.1']
 
@@ -63,6 +68,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -98,6 +104,10 @@ DATABASES = {
         conn_max_age=600,
         ssl_require=True,
     )
+}
+
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',
 }
 
 
