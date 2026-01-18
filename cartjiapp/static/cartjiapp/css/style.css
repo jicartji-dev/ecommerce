@@ -122,6 +122,17 @@ body {
 }
 
 
+/* Navbar dropdown fix */
+.navbar .dropdown-menu {
+    margin-top: 8px;
+    border-radius: 14px;
+}
+
+.navbar .dropdown-item {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+}
+
 /* ================================
    HERO SECTION (PREMIUM)
 ================================ */
