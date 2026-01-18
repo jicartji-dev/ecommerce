@@ -793,7 +793,7 @@ body {
 }
 
 .product-title {
-    font-size: .9rem !important;
+    font-size: .9rem;
     font-weight: 600;
     margin-bottom: 6px;
     line-height: 1.3;
