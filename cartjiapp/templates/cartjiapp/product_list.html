@@ -26,13 +26,13 @@
         <div class="col-lg-3 col-md-4 col-sm-6 col-6">
 
             <div class="product-grid-card">
-            
+
                 {% if product.discount_price %}
                 <span class="discount-badge">
                     {{ product.discount_percentage }}% OFF
                 </span>
                 {% endif %}
-            
+
                 <a href="{{ product.get_absolute_url }}" class="product-image-wrap">
                     {% if product.images.first %}
                     <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
@@ -40,10 +40,10 @@
                     <img src="{% static 'cartjiapp/images/no-image.png' %}">
                     {% endif %}
                 </a>
-            
+
                 <div class="product-info">
                     <h6 class="product-title">{{ product.name }}</h6>
-            
+
                     {% if product.discount_price %}
                     <p class="product-price">
                         <del>₹{{ product.original_price }}</del>
@@ -54,27 +54,20 @@
                         ₹{{ product.original_price }}
                     </p>
                     {% endif %}
-            
+
                     <a href="{{ product.get_absolute_url }}" class="btn btn-view">
                         View Product
                     </a>
                 </div>
-            
+
             </div>
 
 
         </div>
         {% endfor %}
         {% else %}
-        <!-- Skeleton Loader -->
-        {% for i in "1234" %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-6">
-            <div class="skeleton-card">
-                <div class="skeleton-img"></div>
-                <div class="skeleton-text"></div>
-                <div class="skeleton-text small"></div>
-            </div>
-        </div>
+        <p class="text-center text-muted">No products found.</p>
+
         {% endfor %}
         {% endif %}
 
