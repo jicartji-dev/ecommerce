@@ -107,10 +107,6 @@ WSGI_APPLICATION = 'cartji.wsgi.application'
 #     )
 # }
 
-# DATABASES['default']['OPTIONS'] = {
-#     'sslmode': 'require',
-# }
-
 DATABASES = {
     "default": dj_database_url.config(
         default=os.environ.get("DATABASE_URL"),
@@ -118,6 +114,12 @@ DATABASES = {
         ssl_require=True,
     )
 }
+
+
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',
+}
+
 
 
 
