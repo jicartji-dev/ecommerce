@@ -111,14 +111,17 @@ WSGI_APPLICATION = 'cartji.wsgi.application'
 #     'sslmode': 'require',
 # }
 
-# import dj_database_url
-
 DATABASES = {
     "default": dj_database_url.config(
         default=os.environ.get("DATABASE_URL"),
         conn_max_age=600,
-        options={"options": "-c search_path=public"}
+        ssl_require=True,
     )
+}
+
+# ✅ Force PostgreSQL to use public schema
+DATABASES["default"]["OPTIONS"] = {
+    "options": "-c search_path=public"
 }
 
 
