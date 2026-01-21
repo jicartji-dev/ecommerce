@@ -119,11 +119,6 @@ DATABASES = {
     )
 }
 
-# ✅ Force PostgreSQL to use public schema
-DATABASES["default"]["OPTIONS"] = {
-    "options": "-c search_path=public"
-}
-
 
 
 # Password validation
