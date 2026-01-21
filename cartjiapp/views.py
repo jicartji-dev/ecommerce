@@ -121,6 +121,53 @@ def career_part_time(request):
 def career_full_time(request):
     return render(request, 'cartjiapp/career_full_time.html')
 
+from django.shortcuts import redirect
+from urllib.parse import quote
+from .models import Order
+from .utils import generate_order_id
+
+
+def buy_on_whatsapp(request, slug):
+    product = get_object_or_404(
+        Product,
+        slug=slug,
+        is_active=True,
+        stock_status="in_stock"
+    )
+    size = request.POST.get("size")
+    color = request.POST.get("color")
+
+    order = Order.objects.create(
+        order_id=generate_order_id(),
+        product=product,
+        price=product.selling_price,
+        size=size,
+        color=color,
+        payment_method="whatsapp",
+        status="pending",
+    )
+
+
+    message = f"""
+Hi CartJi 👋
+I want to order:
+
+Product: {product.name}
+Size: {order.size}
+Color: {order.color}
+Price: ₹{product.selling_price}
+Order ID: {order.order_id}
+
+Please guide me further.
+"""
+
+    whatsapp_url = (
+        "https://wa.me/918303278845"
+        f"?text={quote(message)}"
+    )
+
+    return redirect(whatsapp_url)
+
 
 
 def health(request):

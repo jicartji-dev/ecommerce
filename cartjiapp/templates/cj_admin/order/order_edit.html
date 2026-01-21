@@ -1,3 +1,6 @@
+{% extends "cj_admin/cj_base.html" %}
+{% block content %}
+
 <h2>Edit Order – {{ order.order_id }}</h2>
 
 <form method="post">
@@ -9,17 +12,38 @@
     <label>Phone</label>
     <input type="text" name="phone" value="{{ order.phone }}" required>
 
-    <label>Address</label>
-    <textarea name="address" required>{{ order.address }}</textarea>
+    <label>Size</label>
+    <select name="size" required>
+        <option value="">Select Size</option>
+        {% for size in sizes %}
+        <option value="{{ size.name }}" {% if order.size == size.name %}selected{% endif %}>
+            {{ size.name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label>Color</label>
+    <select name="color" required>
+        <option value="">Select Color</option>
+        {% for color in colors %}
+        <option value="{{ color.name }}" {% if order.color == color.name %}selected{% endif %}>
+            {{ color.name }}
+        </option>
+        {% endfor %}
+    </select>
 
     <label>Status</label>
     <select name="status">
         <option value="pending" {% if order.status == "pending" %}selected{% endif %}>Pending</option>
         <option value="confirmed" {% if order.status == "confirmed" %}selected{% endif %}>Confirmed</option>
-        <option value="shipped" {% if order.status == "shipped" %}selected{% endif %}>Shipped</option>
-        <option value="delivered" {% if order.status == "delivered" %}selected{% endif %}>Delivered</option>
+        <option value="paid" {% if order.status == "paid" %}selected{% endif %}>Paid</option>
+        <option value="cancelled" {% if order.status == "cancelled" %}selected{% endif %}>Cancelled</option>
     </select>
 
     <br><br>
-    <button type="submit">Update Order</button>
+    <button type="submit" class="cj-btn primary">Update Order</button>
 </form>
+
+<a href="{% url 'cj_orders' %}">← Back to Orders</a>
+
+{% endblock %}

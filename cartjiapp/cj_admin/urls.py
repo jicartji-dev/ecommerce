@@ -13,8 +13,6 @@ from .views import (
     cj_dashboard,
     cj_login,
     cj_logout,
-    cj_order_add,
-    cj_order_delete,
     cj_order_detail,
     cj_order_edit,
     cj_orders,
@@ -76,10 +74,8 @@ urlpatterns = [
 
 
     path("orders/", cj_orders, name="cj_orders"),
-    path("orders/add/", cj_order_add, name="cj_order_add"),
     path("orders/<int:pk>/", cj_order_detail, name="cj_order_detail"),
     path("orders/edit/<int:id>/", cj_order_edit, name="cj_order_edit"),
-    path("orders/delete/<int:id>/", cj_order_delete, name="cj_order_delete"),
 
 
     path("coupons/", cj_coupons, name="cj_coupons"),

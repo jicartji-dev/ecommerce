@@ -66,6 +66,11 @@ class Color(models.Model):
         return self.name + self.code
 
 class Product(models.Model):
+    STOCK_STATUS = (
+        ("in_stock", "In Stock"),
+        ("out_of_stock", "Out of Stock"),
+    )
+
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -82,13 +87,12 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     sizes = models.ManyToManyField(Size, blank=True)
-    
+
     original_price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         help_text="MRP",
-        null=True,
-
+        null=True
     )
     discount_price = models.DecimalField(
         max_digits=10,
@@ -98,11 +102,19 @@ class Product(models.Model):
         help_text="Leave blank if no discount"
     )
 
-
     description = models.TextField()
     views = models.PositiveIntegerField(default=0)
+
     is_active = models.BooleanField(default=True)
+    is_featured = models.BooleanField(default=False)
+    stock_status = models.CharField(
+        max_length=20,
+        choices=STOCK_STATUS,
+        default="in_stock"
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -115,15 +127,13 @@ class Product(models.Model):
             self.slug = slug
         super().save(*args, **kwargs)
 
-    # ✅ FINAL PRICE LOGIC
     @property
     def selling_price(self):
         return self.discount_price if self.discount_price else self.original_price
 
-    # ✅ DISCOUNT %
     @property
     def discount_percentage(self):
-        if self.discount_price:
+        if self.discount_price and self.original_price:
             return int(
                 ((self.original_price - self.discount_price)
                  / self.original_price) * 100
@@ -199,28 +209,45 @@ class Coupon(models.Model):
 
 
 class Order(models.Model):
-    status = models.CharField(
-        max_length=20,
-        choices=[
-            ("pending", "Pending"),
-            ("confirmed", "Confirmed"),
-            ("shipped", "Shipped"),
-            ("delivered", "Delivered"),
-        ],
-        default="pending"
+    STATUS_CHOICES = (
+        ("pending", "Pending"),
+        ("confirmed", "Confirmed"),
+        ("paid", "Paid"),
+        ("cancelled", "Cancelled"),
+    )
+
+    PAYMENT_METHOD = (
+        ("whatsapp", "WhatsApp"),
+        ("cod", "Cash On Delivery"),
+        ("online", "Online Payment"),
     )
 
     order_id = models.CharField(max_length=20, unique=True)
-    customer_name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=15)
-    address = models.TextField()
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    size = models.CharField(max_length=10, blank=True, null=True)
+    color = models.CharField(max_length=30, blank=True, null=True)
+
+
+    customer_name = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=15, blank=True)
+
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHOD,
+        default="whatsapp"
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="pending"
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
 
-    
     def __str__(self):
         return self.order_id
-
 
 
 class OrderItem(models.Model):
@@ -231,3 +258,5 @@ class OrderItem(models.Model):
     
     def __str__(self):
         return f"{self.product.name} x {self.quantity}"
+
+

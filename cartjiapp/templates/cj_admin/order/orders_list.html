@@ -3,20 +3,20 @@
 
 <h1>Orders</h1>
 
-<a href="{% url 'cj_order_add' %}" class="cj-btn primary">
-    + Create Order
-</a>
-
 <table class="cj-table">
     <tr>
         <th>Order ID</th>
         <th>Date</th>
         <th>Customer</th>
         <th>Phone</th>
-        <th>Total</th>
+        <th>Size</th>
+        <th>Color</th>
+        <th>Price</th>
         <th>Status</th>
         <th>Action</th>
     </tr>
+
+
 
     {% for order in orders %}
     <tr>
@@ -24,15 +24,31 @@
         <td>{{ order.created_at|date:"d M Y, h:i A" }}</td>
         <td>{{ order.customer_name }}</td>
         <td>{{ order.phone }}</td>
-        <td>₹{{ order.total_amount }}</td>
-        <td>{{ order.status }}</td>
+    
         <td>
-            <a href="{% url 'cj_order_edit' order.id %}">Edit</a> |
-            <a href="{% url 'cj_order_delete' order.id %}" class="delete-order" data-url="{% url 'cj_order_delete' order.id %}">
-                Delete
-            </a>
+            {% if order.size %}
+            {{ order.size }}
+            {% else %}
+            —
+            {% endif %}
+        </td>
+    
+        <td>
+            {% if order.color %}
+            {{ order.color }}
+            {% else %}
+            —
+            {% endif %}
+        </td>
+    
+        <td>₹{{ order.price }}</td>
+        <td>{{ order.status }}</td>
+    
+        <td>
+            <a href="{% url 'cj_order_edit' order.id %}">Edit</a>
         </td>
     </tr>
+
     {% empty %}
     <tr>
         <td colspan="6">No orders found</td>
@@ -40,19 +56,6 @@
     {% endfor %}
 </table>
 
-
-
-<div id="deleteModal" class="cj-modal" style="display:none;">
-    <div class="cj-modal-box">
-        <h3>Delete Order?</h3>
-        <p>This action cannot be undone.</p>
-
-        <div class="cj-modal-actions">
-            <button id="confirmDelete" class="cj-btn danger">Delete</button>
-            <button id="cancelDelete" class="cj-btn">Cancel</button>
-        </div>
-    </div>
-</div>
 
 
 {% endblock %}

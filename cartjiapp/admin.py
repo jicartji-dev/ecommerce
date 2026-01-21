@@ -1,19 +1,19 @@
 from django.contrib import admin
 from .models import (
     Category,
-    Coupon,
-    Order,
-    OrderItem,
-    Review,
     SubCategory,
     Size,
     Color,
     Product,
     ProductImage,
-    ProductVariant
+    ProductVariant,
+    Review,
+    Coupon,
+    Order,
+    OrderItem,
 )
 
-# Inline product images (with color dropdown)
+# Inline product images
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
@@ -21,16 +21,34 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImageInline]
     list_display = (
-        'name',
-        'original_price',
-        'discount_price',
-        'is_active',
+        "name",
+        "selling_price",
+        "is_active",
+        "is_featured",
+        "stock_status",
+        "created_at",
     )
+    list_filter = ("is_active", "is_featured", "stock_status")
+    prepopulated_fields = {"slug": ("name",)}
+    inlines = [ProductImageInline]
 
 
-# Simple admin registrations
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = (
+        "order_id",
+        "product",
+        "price",
+        "payment_method",
+        "status",
+        "created_at",
+    )
+    list_filter = ("status", "payment_method")
+    search_fields = ("order_id", "phone")
+    list_editable = ("status",)
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
@@ -55,20 +73,17 @@ class ColorAdmin(admin.ModelAdmin):
 class ProductVariantAdmin(admin.ModelAdmin):
     list_display = ("product", "size", "color")
 
+
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ("id", "rating", "is_active", "created_at")
     list_filter = ("rating", "is_active")
 
+
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    list_display = ("code","discount_percent")
+    list_display = ("code", "discount_percent", "is_active")
 
-
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ("order_id", "customer_name", "phone", "total_amount", "status", "created_at")
-    list_filter = ("status",)
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):

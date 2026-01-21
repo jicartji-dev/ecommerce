@@ -80,7 +80,7 @@
                             aria-expanded="false">
                             {{ cat.name }}
                         </a>
-                    
+
                         <ul class="dropdown-menu shadow">
                             {% for sub in cat.subcategories.all %}
                             <li>
@@ -171,9 +171,9 @@
 
                 <!-- CAREER -->
                 <div class="col-6 col-lg-3">
-<h6 class="footer-title">
-    Career <span class="hiring-badge">We’re Hiring</span>
-</h6>
+                    <h6 class="footer-title">
+                        Career <span class="hiring-badge">We’re Hiring</span>
+                    </h6>
                     <ul>
                         <li>
                             <a href="{% url 'career_part_time' %}">Part-Time</a>
@@ -229,28 +229,6 @@
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'cartjiapp/js/main.js'  %}"></script>
-    <!-- <script>
-        let index = 0;
-        const track = document.getElementById("heroTrack");
-        const slides = document.querySelectorAll(".hero-slide");
-        const dots = document.getElementById("heroDots");
-
-        slides.forEach((_, i) => {
-            const d = document.createElement("span");
-            if (i === 0) d.classList.add("active");
-            d.onclick = () => move(i);
-            dots.appendChild(d);
-        });
-
-        function move(i) {
-            index = i;
-            track.style.transform = `translateX(-${i * 100}%)`;
-            dots.querySelectorAll("span").forEach(d => d.classList.remove("active"));
-            dots.children[i].classList.add("active");
-        }
-
-        setInterval(() => move((index + 1) % slides.length), 4000);
-    </script> -->
 
 </body>
 

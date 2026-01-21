@@ -3,18 +3,39 @@
 
 <h1>Order {{ order.order_id }}</h1>
 
+<hr>
+
+<h3>Customer Details</h3>
 <p><strong>Name:</strong> {{ order.customer_name }}</p>
 <p><strong>Phone:</strong> {{ order.phone }}</p>
-<p><strong>Address:</strong> {{ order.address }}</p>
-<p><strong>Status:</strong> {{ order.status }}</p>
-<p><strong>Total:</strong> ₹{{ order.total_amount }}</p>
 
-<h3>Items</h3>
-<ul>
-    {% for item in order.items.all %}
-    <li>{{ item.product.name }} × {{ item.quantity }} — ₹{{ item.price }}</li>
-    {% endfor %}
-</ul>
+<hr>
+
+<h3>Order Details</h3>
+<p><strong>Product:</strong> {{ order.product.name }}</p>
+
+<p>
+    <strong>Size:</strong>
+    {% if order.size %}
+    {{ order.size }}
+    {% else %}
+    —
+    {% endif %}
+</p>
+
+<p>
+    <strong>Color:</strong>
+    {% if order.color %}
+    {{ order.color }}
+    {% else %}
+    —
+    {% endif %}
+</p>
+
+<p><strong>Price:</strong> ₹{{ order.price }}</p>
+<p><strong>Status:</strong> {{ order.status }}</p>
+
+<hr>
 
 <a href="{% url 'cj_orders' %}">← Back to Orders</a>
 

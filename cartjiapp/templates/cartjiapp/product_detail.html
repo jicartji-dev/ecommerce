@@ -76,23 +76,27 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
                     <input type="text" id="couponCode" class="form-control" placeholder="Enter coupon code">
                 </div>
 
-                <button class="btn btn-success btn-lg product-cta" onclick="orderOnWhatsApp(
-                        '{{ product.name }}',
-                        '{% if product.discount_price %}{{ product.selling_price }}{% else %}{{ product.original_price }}{% endif %}',
-                        '{{ request.build_absolute_uri }}'
-                    )">
-                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
-                </button>
+                <input type="hidden" id="selectedSize">
+                <input type="hidden" id="selectedColor">
+                
+
+                <form method="POST" action="{% url 'buy_on_whatsapp' product.slug %}">
+                    {% csrf_token %}
+                
+                    <input type="hidden" name="size" id="formSize">
+                    <input type="hidden" name="color" id="formColor">
+                
+                    <button type="submit" class="btn btn-success btn-lg product-cta" onclick="return prepareOrder()">
+                        <i class="fab fa-whatsapp"></i> Chat on WhatsApp & Confirm Order
+                    </button>
+                    <p class="text-muted mt-2" style="font-size: 0.85rem;">
+                        ✔ Confirm size & color on WhatsApp • ✔ No payment without confirmation
+                    </p>
+
+                </form>
+
 
                 <p id="variantMessage" class="variant-message"></p>
-
-
-                <!-- TRUST -->
-                <div class="product-trust">
-                    <span>✔ Premium Quality</span>
-                    <span>🚚 Fast Support</span>
-                    <span>🔒 Secure Order</span>
-                </div>
 
             </div>
 

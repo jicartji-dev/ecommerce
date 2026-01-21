@@ -1,5 +1,5 @@
 from django import forms
-from cartjiapp.models import Color, Coupon, Order, OrderItem, Product, ProductImage, Size, Category, SubCategory
+from cartjiapp.models import Color, Coupon, Order, Product, ProductImage, Size, Category, SubCategory
 
 # begin
 
@@ -58,14 +58,30 @@ class CJProductImageForm(forms.ModelForm):
 
 
 class CJOrderForm(forms.ModelForm):
+    size = forms.ModelChoiceField(
+        queryset=Size.objects.all(),
+        required=False
+    )
+    color = forms.ModelChoiceField(
+        queryset=Color.objects.all(),
+        required=False
+    )
+
     class Meta:
         model = Order
-        fields = ["customer_name", "phone", "address", "status"]
+        fields = [
+            "order_id",
+            "product",
+            "price",
+            "size",
+            "color",
+            "customer_name",
+            "phone",
+            "payment_method",
+            "status",
+        ]
 
-class CJOrderItemForm(forms.ModelForm):
-    class Meta:
-        model = OrderItem
-        fields = ["product", "quantity", "price"]
+
 
 
 class CJCouponForm(forms.ModelForm):
