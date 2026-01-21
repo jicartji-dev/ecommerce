@@ -99,17 +99,28 @@ WSGI_APPLICATION = 'cartji.wsgi.application'
 #     )
 # }
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True,
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get("DATABASE_URL"),
+#         conn_max_age=600,
+#         ssl_require=True,
+#     )
+# }
 
 # DATABASES['default']['OPTIONS'] = {
 #     'sslmode': 'require',
 # }
+
+# import dj_database_url
+
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        options={"options": "-c search_path=public"}
+    )
+}
+
 
 
 # Password validation
