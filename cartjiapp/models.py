@@ -106,15 +106,15 @@ class Product(models.Model):
     views = models.PositiveIntegerField(default=0)
 
     is_active = models.BooleanField(default=True)
-    is_featured = models.BooleanField(default=False,null=True)
+    is_featured = models.BooleanField(default=False)
     stock_status = models.CharField(
         max_length=20,
         choices=STOCK_STATUS,
-        default="in_stock",null=True
+        default="in_stock"
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
