@@ -24,10 +24,11 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "selling_price",
-        "is_active",
+        "updated_at",
         "is_featured",
         "stock_status",
         "created_at",
+        
     )
     list_filter = ("is_active", "is_featured", "stock_status")
     prepopulated_fields = {"slug": ("name",)}
