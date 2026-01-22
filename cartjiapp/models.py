@@ -106,11 +106,11 @@ class Product(models.Model):
     views = models.PositiveIntegerField(default=0)
 
     is_active = models.BooleanField(default=True)
-    is_featured = models.BooleanField(default=False)
+    is_featured = models.BooleanField(default=True)
     stock_status = models.CharField(
         max_length=20,
         choices=STOCK_STATUS,
-        default="in_stock"
+        default="out_of_stock"
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
