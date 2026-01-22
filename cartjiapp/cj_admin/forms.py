@@ -1,7 +1,12 @@
 from django import forms
-from cartjiapp.models import Color, Coupon, Order, Product, ProductImage, Size, Category, SubCategory
+from cartjiapp.models import (
+    Color, Coupon, Order, Product,
+    ProductImage, Size, Category, SubCategory
+)
 
-# begin
+# -------------------------
+# BASIC FORMS
+# -------------------------
 
 class CJColorForm(forms.ModelForm):
     class Meta:
@@ -27,7 +32,9 @@ class CJSubCategoryForm(forms.ModelForm):
         fields = ["category", "name", "slug"]
 
 
-# product
+# -------------------------
+# PRODUCT FORMS
+# -------------------------
 
 class CJProductCreateForm(forms.ModelForm):
     sizes = forms.ModelMultipleChoiceField(
@@ -45,9 +52,10 @@ class CJProductCreateForm(forms.ModelForm):
             "original_price",
             "discount_price",
             "description",
+            "stock_status",
             "is_active",
+            "is_featured",
         ]
-
 
 
 class CJProductImageForm(forms.ModelForm):
@@ -56,25 +64,19 @@ class CJProductImageForm(forms.ModelForm):
         fields = ["image", "color"]
 
 
+# -------------------------
+# ORDER FORM (FIXED)
+# -------------------------
 
 class CJOrderForm(forms.ModelForm):
-    size = forms.ModelChoiceField(
-        queryset=Size.objects.all(),
-        required=False
-    )
-    color = forms.ModelChoiceField(
-        queryset=Color.objects.all(),
-        required=False
-    )
-
     class Meta:
         model = Order
         fields = [
             "order_id",
             "product",
             "price",
-            "size",
-            "color",
+            "size",     # CharField
+            "color",    # CharField
             "customer_name",
             "phone",
             "payment_method",
@@ -82,7 +84,9 @@ class CJOrderForm(forms.ModelForm):
         ]
 
 
-
+# -------------------------
+# COUPON
+# -------------------------
 
 class CJCouponForm(forms.ModelForm):
     class Meta:

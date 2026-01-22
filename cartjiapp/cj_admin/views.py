@@ -285,8 +285,8 @@ def cj_order_edit(request, id):
     if request.method == "POST":
         order.customer_name = request.POST.get("customer_name")
         order.phone = request.POST.get("phone")
-        order.size = request.POST.get("size")
-        order.color = request.POST.get("color")
+        order.size = request.POST.get("size") or ""
+        order.color = request.POST.get("color") or ""
         order.status = request.POST.get("status")
         order.save()
         return redirect("cj_orders")
