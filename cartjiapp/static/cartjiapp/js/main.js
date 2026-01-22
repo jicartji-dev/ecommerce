@@ -72,25 +72,3 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* ===============================
-   PRODUCT VARIANT SELECTION
-================================ */
-
-
-
-function selectSize(size, btn) {
-    selectedSize = size;
-    document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    document.getElementById("variantMessage").style.display = "none";
-}
-
-function selectColor(color, imageUrl, el) {
-    selectedColor = color;
-    document.getElementById("mainProductImage").src = imageUrl;
-    document.querySelectorAll(".color-circle").forEach(c => c.classList.remove("active"));
-    el.classList.add("active");
-
-    document.getElementById("variantMessage").style.display = "none";
-}

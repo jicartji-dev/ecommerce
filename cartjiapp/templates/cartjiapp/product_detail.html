@@ -74,21 +74,28 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
                 <!-- CTA -->
                 <div class="mt-3">
                     <input type="text" id="couponCode" class="form-control" placeholder="Enter coupon code">
+
                 </div>
 
                 <input type="hidden" id="selectedSize">
                 <input type="hidden" id="selectedColor">
-                
+
 
                 <form method="POST" action="{% url 'buy_on_whatsapp' product.slug %}">
                     {% csrf_token %}
-                
+
                     <input type="hidden" name="size" id="formSize">
                     <input type="hidden" name="color" id="formColor">
-                
-                    <button type="button" class="btn btn-success btn-lg product-cta" onclick="openWhatsAppOrder()">
+
+                    <!-- <button type="button" class="btn btn-success btn-lg product-cta" onclick="openWhatsAppOrder()">
+                        <i class="fab fa-whatsapp"></i> Chat on WhatsApp & Confirm Order
+                    </button> -->
+                    <button type="button" class="btn btn-success btn-lg product-cta" onclick="handleOrderClick(this)"
+                        data-product-name="{{ product.name }}"
+                        data-price="{{ product.selling_price|default_if_none:product.original_price }}">
                         <i class="fab fa-whatsapp"></i> Chat on WhatsApp & Confirm Order
                     </button>
+
 
                     <p class="text-muted mt-2" style="font-size: 0.85rem;">
                         ✔ Confirm size & color on WhatsApp • ✔ No payment without confirmation
@@ -111,74 +118,187 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
         </div>
 
     </div>
+
 </section>
 
-<div class="modal fade" id="couponModal" tabindex="-1">
+
+
+
+
+<div class="modal fade" id="couponResultModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-3">
+        <div class="modal-content p-4">
 
-            <h5 id="modalTitle"></h5>
-            <p id="modalDetails"></p>
+            <h5 id="couponModalTitle"></h5>
+            <p id="couponModalBody" class="mt-2"></p>
 
-            <div class="d-flex gap-2">
-                <button class="btn btn-secondary w-50" data-bs-dismiss="modal">Back</button>
-                <button id="finalOrderBtn" class="btn btn-success w-50">
-                    Order
-                </button>
-            </div>
+            <button id="finalOrderBtn" class="btn btn-success w-100 mt-3" style="display:none">
+                Order on WhatsApp
+            </button>
 
         </div>
     </div>
 </div>
 
 
+
+
+
 <script>
-    function openWhatsAppOrder() {
-        const msgEl = document.getElementById("variantMessage");
+    function selectSize(size, btn) {
+        selectedSize = size;
 
-        if (!selectedSize && !selectedColor) {
-            msgEl.innerText = "Please select size and color before ordering.";
-            msgEl.style.display = "block";
+        // UI active state
+        document.querySelectorAll(".size-btn").forEach(b =>
+            b.classList.remove("active")
+        );
+        btn.classList.add("active");
+
+        // hide error message if shown
+        const msg = document.getElementById("variantMessage");
+        if (msg) msg.style.display = "none";
+    }
+
+    function selectColor(color, imageUrl, el) {
+        selectedColor = color;
+
+        // change image
+        document.getElementById("mainProductImage").src = imageUrl;
+
+        // UI active state
+        document.querySelectorAll(".color-circle").forEach(c =>
+            c.classList.remove("active")
+        );
+        el.classList.add("active");
+
+        // hide error message if shown
+        const msg = document.getElementById("variantMessage");
+        if (msg) msg.style.display = "none";
+    }
+</script>
+
+
+
+
+
+<script>
+    let selectedSize = "";
+    let selectedColor = "";
+    let finalPrice = 0;
+
+    function handleOrderClick(btn) {
+        const variantMsg = document.getElementById("variantMessage");
+
+        if (!selectedSize || !selectedColor) {
+            variantMsg.innerText = "Please select size and color before ordering.";
+            variantMsg.style.display = "block";
             return;
         }
 
-        if (!selectedSize) {
-            msgEl.innerText = "Please select a size.";
-            msgEl.style.display = "block";
+        variantMsg.style.display = "none";
+
+        const productName = btn.dataset.productName;
+        const basePrice = parseFloat(btn.dataset.price);
+        const couponCode = document.getElementById("couponCode").value.trim();
+
+        const modal = new bootstrap.Modal(
+            document.getElementById("couponResultModal")
+        );
+
+        const titleEl = document.getElementById("couponModalTitle");
+        const bodyEl = document.getElementById("couponModalBody");
+        const orderBtn = document.getElementById("finalOrderBtn");
+
+        // No coupon entered → direct order
+        if (!couponCode) {
+            finalPrice = basePrice;
+
+            titleEl.innerText = "Confirm Order";
+            bodyEl.innerHTML = `
+            <strong>Price:</strong> ₹${basePrice}
+        `;
+
+            orderBtn.style.display = "block";
+            orderBtn.onclick = () => openWhatsApp(productName);
+            modal.show();
             return;
         }
 
-        if (!selectedColor) {
-            msgEl.innerText = "Please select a color.";
-            msgEl.style.display = "block";
-            return;
-        }
+        // Coupon entered → validate from DB
+        fetch(`/check-coupon/?code=${encodeURIComponent(couponCode)}`)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.valid) {
+                    titleEl.innerText = "Invalid Coupon ❌";
+                    bodyEl.innerText = "This coupon code is not valid.";
+                    orderBtn.style.display = "none";
+                    modal.show();
 
-        // hide message if everything is selected
-        msgEl.style.display = "none";
+                    setTimeout(() => modal.hide(), 2500);
+                    return;
+                }
 
-        const productName = "{{ product.name }}";
-        const price = "{{ product.selling_price|default:product.original_price }}";
+                const discountPercent = data.discount;
+                const discountAmount = Math.round(
+                    basePrice * discountPercent / 100
+                );
+
+                finalPrice = basePrice - discountAmount;
+
+                titleEl.innerText = "Coupon Applied 🎉";
+                bodyEl.innerHTML = `
+    <div class="price-row">
+        <span>Original Price</span>
+        <span>₹${basePrice}</span>
+    </div>
+
+    <div class="price-row discount">
+        <span>Discount</span>
+        <span>- ₹${discountAmount}</span>
+    </div>
+
+    <hr>
+
+    <div class="price-row final">
+        <span>Final Price</span>
+        <span>₹${finalPrice}</span>
+    </div>
+`;
+
+
+                orderBtn.style.display = "block";
+                orderBtn.onclick = () => openWhatsApp(productName, couponCode);
+                modal.show();
+            });
+    }
+
+    function openWhatsApp(productName, coupon = "None") {
         const pageUrl = window.location.href;
 
         const message =
-            `Hello CartJi 
+            `Hello CartJi 👋
 
 I want to order:
 
 🛍 Product: ${productName}
 🎨 Color: ${selectedColor}
 📏 Size: ${selectedSize}
-💰 Price: ₹${price}
+💰 Price: ₹${finalPrice}
+🏷 Coupon: ${coupon}
 
 🔗 Product link:
 ${pageUrl}`;
 
-        const phone = "918303278845"; // your number
+        const phone = "918303278845";
         const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
 
         window.open(url, "_blank");
     }
 </script>
+
+
+
+
+
 
 {% endblock %}
