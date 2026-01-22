@@ -1261,3 +1261,72 @@ body {
         transform: scale(0.9) translateZ(-40px) rotateY(20deg);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+/* Coupon Modal Styling */
+#couponResultModal .modal-content {
+    border-radius: 18px;
+    border: none;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    animation: popupFade 0.35s ease;
+}
+
+#couponResultModal h5 {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+#couponResultModal p {
+    font-size: 0.95rem;
+    color: #444;
+}
+
+/* Price rows */
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    margin: 8px 0;
+}
+
+.price-row.discount {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.price-row.final {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #198754;
+}
+
+/* Order button inside modal */
+#finalOrderBtn {
+    border-radius: 0 0 30px 30px;
+    font-weight: 700;
+    padding: 12px;
+    margin-top: 16px;
+}
+
+/* Popup animation */
+@keyframes popupFade {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
