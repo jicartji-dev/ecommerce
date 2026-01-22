@@ -75,30 +75,24 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ===============================
    PRODUCT VARIANT SELECTION
 ================================ */
-let selectedSize = null;
-let selectedColor = null;
 
-function selectSize(size, el) {
+
+
+function selectSize(size, btn) {
     selectedSize = size;
+    document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-    document.querySelectorAll(".size-btn")
-        .forEach(btn => btn.classList.remove("active"));
-
-    el.classList.add("active");
-    hideVariantMessage();
+    document.getElementById("variantMessage").style.display = "none";
 }
 
-function selectColor(color, image, el) {
+function selectColor(color, imageUrl, el) {
     selectedColor = color;
-
-    const img = document.getElementById("mainProductImage");
-    if (img) img.src = image;
-
-    document.querySelectorAll(".color-circle")
-        .forEach(c => c.classList.remove("active"));
-
+    document.getElementById("mainProductImage").src = imageUrl;
+    document.querySelectorAll(".color-circle").forEach(c => c.classList.remove("active"));
     el.classList.add("active");
-    hideVariantMessage();
+
+    document.getElementById("variantMessage").style.display = "none";
 }
 
 
