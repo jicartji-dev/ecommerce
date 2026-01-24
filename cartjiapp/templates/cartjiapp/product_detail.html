@@ -86,6 +86,8 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
                     <input type="hidden" name="size" id="formSize">
                     <input type="hidden" name="color" id="formColor">
+                    <input type="hidden" name="final_price" id="formFinalPrice">
+                    
 
                     <!-- <button type="button" class="btn btn-success btn-lg product-cta" onclick="openWhatsAppOrder()">
                         <i class="fab fa-whatsapp"></i> Chat on WhatsApp & Confirm Order
@@ -187,124 +189,74 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
     let selectedColor = "";
     let finalPrice = 0;
 
-    function handleOrderClick(btn) {
-        const variantMsg = document.getElementById("variantMessage");
 
-        if (!selectedSize || !selectedColor) {
-            variantMsg.innerText = "Please select size and color before ordering.";
-            variantMsg.style.display = "block";
-            return;
-        }
-        // ✅ PUT values into form inputs
+function handleOrderClick(btn) {
+
+    const variantMsg = document.getElementById("variantMessage");
+    const couponCode = document.getElementById("couponCode").value.trim();
+    const basePrice = parseFloat(btn.dataset.price);
+
+    if (!selectedSize || !selectedColor) {
+        variantMsg.innerText = "Please select size and color before ordering.";
+        variantMsg.style.display = "block";
+        return;
+    }
+
+    // fill common form values
     document.getElementById("formSize").value = selectedSize;
     document.getElementById("formColor").value = selectedColor;
 
-    // ✅ submit form
-    btn.closest("form").submit();
+    // 🔹 CASE 1: NO COUPON → direct order
+    if (!couponCode) {
+        document.getElementById("formFinalPrice").value = basePrice;
+        btn.closest("form").submit();   // 🔥 ORDER CREATED HERE
+        return;
+    }
 
-        variantMsg.style.display = "none";
+    // 🔹 CASE 2: COUPON ENTERED → show popup
+    fetch(`/check-coupon/?code=${encodeURIComponent(couponCode)}`)
+        .then(res => res.json())
+        .then(data => {
 
-        const productName = btn.dataset.productName;
-        const basePrice = parseFloat(btn.dataset.price);
-        const couponCode = document.getElementById("couponCode").value.trim();
+            const modal = new bootstrap.Modal(
+                document.getElementById("couponResultModal")
+            );
 
-        const modal = new bootstrap.Modal(
-            document.getElementById("couponResultModal")
-        );
+            const titleEl = document.getElementById("couponModalTitle");
+            const bodyEl = document.getElementById("couponModalBody");
+            const orderBtn = document.getElementById("finalOrderBtn");
 
-        const titleEl = document.getElementById("couponModalTitle");
-        const bodyEl = document.getElementById("couponModalBody");
-        const orderBtn = document.getElementById("finalOrderBtn");
+            if (!data.valid) {
+                titleEl.innerText = "Invalid Coupon ❌";
+                bodyEl.innerText = "This coupon code is not valid.";
+                orderBtn.style.display = "none";
+                modal.show();
+                return;
+            }
 
-        // No coupon entered → direct order
-        if (!couponCode) {
-            finalPrice = basePrice;
+            const discountAmount = Math.round(basePrice * data.discount / 100);
+            const finalPrice = basePrice - discountAmount;
 
-            titleEl.innerText = "Confirm Order";
+            titleEl.innerText = "Confirm Order 🎉";
             bodyEl.innerHTML = `
-            <strong>Price:</strong> ₹${basePrice}
-        `;
+                <strong>Final Price:</strong> ₹${finalPrice}
+            `;
 
             orderBtn.style.display = "block";
-            orderBtn.onclick = () => openWhatsApp(productName);
+            orderBtn.onclick = () => {
+                document.getElementById("formFinalPrice").value = finalPrice;
+                btn.closest("form").submit(); // 🔥 ORDER CREATED HERE
+            };
+
             modal.show();
-            return;
-        }
-
-        // Coupon entered → validate from DB
-        fetch(`/check-coupon/?code=${encodeURIComponent(couponCode)}`)
-            .then(res => res.json())
-            .then(data => {
-                if (!data.valid) {
-                    titleEl.innerText = "Invalid Coupon ❌";
-                    bodyEl.innerText = "This coupon code is not valid.";
-                    orderBtn.style.display = "none";
-                    modal.show();
-
-                    setTimeout(() => modal.hide(), 2500);
-                    return;
-                }
-
-                const discountPercent = data.discount;
-                const discountAmount = Math.round(
-                    basePrice * discountPercent / 100
-                );
-
-                finalPrice = basePrice - discountAmount;
-
-                titleEl.innerText = "Coupon Applied 🎉";
-                bodyEl.innerHTML = `
-    <div class="price-row">
-        <span>Original Price</span>
-        <span>₹${basePrice}</span>
-    </div>
-
-    <div class="price-row discount">
-        <span>Discount</span>
-        <span>- ₹${discountAmount}</span>
-    </div>
-
-    <hr>
-
-    <div class="price-row final">
-        <span>Final Price</span>
-        <span>₹${finalPrice}</span>
-    </div>
-`;
+        });
+}
 
 
-                orderBtn.style.display = "block";
-                orderBtn.onclick = () => openWhatsApp(productName, couponCode);
-                modal.show();
-            });
-    }
+        
+    
 
-    function openWhatsApp(productName, coupon = "None") {
-        const pageUrl = window.location.href;
-
-        const message =
-            `Hello CartJi 
-
-I want to order:
-
-🛍 Product: ${productName}
-🎨 Color: ${selectedColor}
-📏 Size: ${selectedSize}
-💰 Price: ₹${finalPrice}
-🏷 Coupon: ${coupon}
-
-🔗 Product link:
-${pageUrl}`;
-
-        const phone = "918303278845";
-        const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
-
-        window.open(url, "_blank");
-    }
-</script>
-
-
-
+    
 
 
 
