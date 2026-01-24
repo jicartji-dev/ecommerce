@@ -136,16 +136,19 @@ def buy_on_whatsapp(request, slug):
     )
     size = request.POST.get("size")
     color = request.POST.get("color")
+    final_price = request.POST.get("final_price") or product.selling_price
 
     order = Order.objects.create(
-        order_id=generate_order_id(),
-        product=product,
-        price=product.selling_price,
-        size=size,
-        color=color,
-        payment_method="whatsapp",
-        status="pending",
-    )
+         order_id=generate_order_id(),
+         product=product,
+         price=final_price,
+         size=size,
+         color=color,
+         payment_method="whatsapp",
+         status="pending",
+     )
+
+    
 
 
     message = f"""
