@@ -92,7 +92,7 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
                     <!-- <button type="button" class="btn btn-success btn-lg product-cta" onclick="openWhatsAppOrder()">
                         <i class="fab fa-whatsapp"></i> Chat on WhatsApp & Confirm Order
                     </button> -->
-                    <button type="submit" class="btn btn-success btn-lg product-cta" onclick="handleOrderClick(this)"
+                    <button type="button" class="btn btn-success btn-lg product-cta" onclick="handleOrderClick(this)"
                         data-product-name="{{ product.name }}"
                         data-price="{{ product.selling_price|default_if_none:product.original_price }}">
                         <i class="fab fa-whatsapp"></i> Chat on WhatsApp & Confirm Order
