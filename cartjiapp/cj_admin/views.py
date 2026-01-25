@@ -314,13 +314,28 @@ def cj_order_edit(request, id):
             "cancelled": [],
         }
 
-        # ❌ invalid status change
+        
+        
         if new_status not in allowed_transitions[order.status]:
-            messages.error(
-                request,
-                f"Invalid status change: {order.status} → {new_status}"
-            )
+
+            if order.status == "pending" and new_status == "paid":
+                messages.error(
+                    request,
+                    "You must CONFIRM the order before marking it as PAID."
+                )
+            elif order.status == "confirmed" and new_status == "pending":
+                messages.error(
+                    request,
+                    "Confirmed orders cannot go back to Pending."
+                )
+            else:
+                messages.error(
+                    request,
+                    "This status change is not allowed."
+                )
+
             return redirect("cj_orders")
+
 
         # ✅ valid update
         order.customer_name = request.POST.get("customer_name")

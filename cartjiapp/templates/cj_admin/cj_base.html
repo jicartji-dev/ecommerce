@@ -10,6 +10,16 @@
 </head>
 
 <body>
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <button class="cj-mobile-toggle" id="cjToggle">
         <i class="fa-solid fa-bars"></i>
     </button>
@@ -94,3 +104,4 @@
 </body>
 
 </html>
+
