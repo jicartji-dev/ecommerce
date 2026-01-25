@@ -157,7 +157,7 @@ I want to order:
 Product: {product.name}
 Size: {order.size}
 Color: {order.color}
-Price: ₹{product.selling_price}
+Price: ₹{final_price}
 Order ID: {order.order_id}
 
 Please guide me further.
