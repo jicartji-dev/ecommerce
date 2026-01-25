@@ -8,57 +8,71 @@
 <form method="post" enctype="multipart/form-data" class="cj-form">
     {% csrf_token %}
 
+    <div class="cj-form-card">
     <h3>Basic Information</h3>
-    <div class="cj-form-section">
-        <p style="color:#666;font-size:13px;">
-            Fill carefully — these affect how product appears on site.
-        </p>
 
-        {{ product_form.category.label_tag }}
-        {{ product_form.category }}
-    
-        {{ product_form.subcategory.label_tag }}
-        {{ product_form.subcategory }}
-    
-        {{ product_form.name.label_tag }}
-        {{ product_form.name }}
-    </div>
-    
-    <hr>
-    
-    <h3>Pricing</h3>
-    <div class="cj-form-section">
-        {{ product_form.original_price.label_tag }}
-        {{ product_form.original_price }}
-    
-        {{ product_form.discount_price.label_tag }}
-        {{ product_form.discount_price }}
-    </div>
-    
-    <hr>
-    
-    <h3>Inventory & Visibility</h3>
-    <div class="cj-form-section">
-        {{ product_form.sizes.label_tag }}
-        {{ product_form.sizes }}
-        <div style="margin-top: 8px;">
-            <a href="{% url 'cj_size_add' %}" target="_blank">
-                ➕ Add new Size
-            </a>
+    <div class="cj-form-grid">
+        <div>
+            {{ product_form.category.label_tag }}
+            {{ product_form.category }}
         </div>
 
-    
-        {{ product_form.stock_status.label_tag }}
-        {{ product_form.stock_status }}
-    
-        {{ product_form.is_featured.label_tag }}
-        {{ product_form.is_featured }}
-    
-        {{ product_form.is_active.label_tag }}
-        {{ product_form.is_active }}
+        <div>
+            {{ product_form.subcategory.label_tag }}
+            {{ product_form.subcategory }}
+        </div>
+
+        <div class="full">
+            {{ product_form.name.label_tag }}
+            {{ product_form.name }}
+        </div>
+    </div>
+    </div>
+
+<div class="cj-form-card">
+    <h3>Pricing</h3>
+
+    <div class="cj-form-grid">
+        <div>
+            {{ product_form.original_price.label_tag }}
+            {{ product_form.original_price }}
+        </div>
+
+        <div>
+            {{ product_form.discount_price.label_tag }}
+            {{ product_form.discount_price }}
+        </div>
+    </div>
+</div>
+    <div class="cj-form-card">
+    <h3>Inventory & Visibility</h3>
+
+    <div class="cj-form-grid">
+        <div class="full">
+            {{ product_form.sizes.label_tag }}
+            {{ product_form.sizes }}
+            <small>
+                <a href="{% url 'cj_size_add' %}" target="_blank">➕ Add new size</a>
+            </small>
+        </div>
+
+        <div>
+            {{ product_form.stock_status.label_tag }}
+            {{ product_form.stock_status }}
+        </div>
+
+        <div>
+            {{ product_form.is_featured.label_tag }}
+            {{ product_form.is_featured }}
+        </div>
+
+        <div>
+            {{ product_form.is_active.label_tag }}
+            {{ product_form.is_active }}
+        </div>
+    </div>
     </div>
     
-    <hr>
     
     <h3>Description</h3>
     <div class="cj-form-section">
@@ -81,9 +95,18 @@
 
     <div id="image-formset">
         {% for form in image_formset %}
-        <div class="cj-image-form">
-            {{ form.as_p }}
+        <div class="cj-image-card">
+    {{ form.image.label_tag }}
+    {{ form.image }}
+
+    {{ form.color.label_tag }}
+    {{ form.color }}
+
+    <div style="margin-top:8px">
+        {{ form.DELETE }} Delete
+    </div>
         </div>
+        
         {% endfor %}
     </div>
 
