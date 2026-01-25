@@ -10,10 +10,20 @@
 
     <h3>Product Info</h3>
     {{ product_form.as_p }}
+    <div style="margin-top: 8px;">
+        <a href="{% url 'cj_size_add' %}" target="_blank">
+            ➕ Add new Size
+        </a>
+    </div>
 
     <hr>
 
     <h3>Product Images</h3>
+    <div style="margin-bottom: 8px;">
+        <a href="{% url 'cj_color_add' %}" target="_blank">
+            ➕ Add new Color
+        </a>
+    </div>
 
     {{ image_formset.management_form }}
 
