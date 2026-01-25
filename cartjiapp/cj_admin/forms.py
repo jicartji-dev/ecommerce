@@ -23,13 +23,13 @@ class CJSizeForm(forms.ModelForm):
 class CJCategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ["name", "slug", "image"]
+        fields = ["name","image"]
 
 
 class CJSubCategoryForm(forms.ModelForm):
     class Meta:
         model = SubCategory
-        fields = ["category", "name", "slug"]
+        fields = ["category", "name"]
 
 
 # -------------------------

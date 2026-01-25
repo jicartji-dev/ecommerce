@@ -73,6 +73,125 @@ def cj_dashboard(request):
     return render(request, "cj_admin/cj_dashboard.html", context)
 
 
+
+# --------------------------------------------------
+# CATEGORIES
+# --------------------------------------------------
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_categories(request):
+    return render(
+        request,
+        "cj_admin/category/cj_categories.html",
+        {"categories": Category.objects.all().order_by("name")}
+    )
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_category_form(request, pk=None):
+    category = Category.objects.filter(pk=pk).first()
+    form = CJCategoryForm(request.POST or None, request.FILES or None, instance=category)
+    if form.is_valid():
+        form.save()
+        return redirect("cj_categories")
+    return render(request, "cj_admin/category/cj_category_form.html", {"form": form})
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_category_delete(request, pk):
+    get_object_or_404(Category, pk=pk).delete()
+    return redirect("cj_categories")
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_subcategories(request):
+    return render(
+        request,
+        "cj_admin/subcategory/cj_subcategories.html",
+        {"subcategories": SubCategory.objects.select_related("category")}
+    )
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_subcategory_form(request, pk=None):
+    sub = SubCategory.objects.filter(pk=pk).first()
+    form = CJSubCategoryForm(request.POST or None, instance=sub)
+    if form.is_valid():
+        form.save()
+        return redirect("cj_subcategories")
+    return render(request, "cj_admin/subcategory/cj_subcategory_form.html", {"form": form})
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_subcategory_delete(request, pk):
+    get_object_or_404(SubCategory, pk=pk).delete()
+    return redirect("cj_subcategories")
+
+
+
+
+
+
+# --------------------------------------------------
+# COLORS & SIZES
+# --------------------------------------------------
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_colors(request):
+    return render(
+        request,
+        "cj_admin/colorsize/cj_colors.html",
+        {"colors": Color.objects.all().order_by("name")}
+    )
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_color_form(request, pk=None):
+    color = Color.objects.filter(pk=pk).first()
+    form = CJColorForm(request.POST or None, instance=color)
+    if form.is_valid():
+        form.save()
+        return redirect("cj_colors")
+    return render(request, "cj_admin/colorsize/cj_color_form.html", {"form": form})
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_color_delete(request, pk):
+    get_object_or_404(Color, pk=pk).delete()
+    return redirect("cj_colors")
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_sizes(request):
+    return render(
+        request,
+        "cj_admin/colorsize/cj_sizes.html",
+        {"sizes": Size.objects.all().order_by("name")}
+    )
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_size_form(request, pk=None):
+    size = Size.objects.filter(pk=pk).first()
+    form = CJSizeForm(request.POST or None, instance=size)
+    if form.is_valid():
+        form.save()
+        return redirect("cj_sizes")
+    return render(request, "cj_admin/colorsize/cj_size_form.html", {"form": form})
+
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_size_delete(request, pk):
+    get_object_or_404(Size, pk=pk).delete()
+    return redirect("cj_sizes")
+
+
+
+
+
+
+
+
 # --------------------------------------------------
 # PRODUCTS
 # --------------------------------------------------
@@ -149,115 +268,6 @@ def cj_product_delete(request, pk):
         "cj_admin/products/product_delete_confirm.html",
         {"product": product}
     )
-
-
-# --------------------------------------------------
-# COLORS & SIZES
-# --------------------------------------------------
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_colors(request):
-    return render(
-        request,
-        "cj_admin/colorsize/cj_colors.html",
-        {"colors": Color.objects.all().order_by("name")}
-    )
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_color_form(request, pk=None):
-    color = Color.objects.filter(pk=pk).first()
-    form = CJColorForm(request.POST or None, instance=color)
-    if form.is_valid():
-        form.save()
-        return redirect("cj_colors")
-    return render(request, "cj_admin/colorsize/cj_color_form.html", {"form": form})
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_color_delete(request, pk):
-    get_object_or_404(Color, pk=pk).delete()
-    return redirect("cj_colors")
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_sizes(request):
-    return render(
-        request,
-        "cj_admin/colorsize/cj_sizes.html",
-        {"sizes": Size.objects.all().order_by("name")}
-    )
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_size_form(request, pk=None):
-    size = Size.objects.filter(pk=pk).first()
-    form = CJSizeForm(request.POST or None, instance=size)
-    if form.is_valid():
-        form.save()
-        return redirect("cj_sizes")
-    return render(request, "cj_admin/colorsize/cj_size_form.html", {"form": form})
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_size_delete(request, pk):
-    get_object_or_404(Size, pk=pk).delete()
-    return redirect("cj_sizes")
-
-
-# --------------------------------------------------
-# CATEGORIES
-# --------------------------------------------------
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_categories(request):
-    return render(
-        request,
-        "cj_admin/category/cj_categories.html",
-        {"categories": Category.objects.all().order_by("name")}
-    )
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_category_form(request, pk=None):
-    category = Category.objects.filter(pk=pk).first()
-    form = CJCategoryForm(request.POST or None, request.FILES or None, instance=category)
-    if form.is_valid():
-        form.save()
-        return redirect("cj_categories")
-    return render(request, "cj_admin/category/cj_category_form.html", {"form": form})
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_category_delete(request, pk):
-    get_object_or_404(Category, pk=pk).delete()
-    return redirect("cj_categories")
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_subcategories(request):
-    return render(
-        request,
-        "cj_admin/subcategory/cj_subcategories.html",
-        {"subcategories": SubCategory.objects.select_related("category")}
-    )
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_subcategory_form(request, pk=None):
-    sub = SubCategory.objects.filter(pk=pk).first()
-    form = CJSubCategoryForm(request.POST or None, instance=sub)
-    if form.is_valid():
-        form.save()
-        return redirect("cj_subcategories")
-    return render(request, "cj_admin/subcategory/cj_subcategory_form.html", {"form": form})
-
-
-@user_passes_test(cj_admin_only, login_url="cj_login")
-def cj_subcategory_delete(request, pk):
-    get_object_or_404(SubCategory, pk=pk).delete()
-    return redirect("cj_subcategories")
-
 
 # --------------------------------------------------
 # ORDERS (NO ADD ORDER)
@@ -337,3 +347,35 @@ def cj_coupon_edit(request, pk):
 def cj_coupon_delete(request, pk):
     get_object_or_404(Coupon, pk=pk).delete()
     return redirect("cj_coupons")
+
+
+
+
+
+
+
+
+
+
+
+# --------------------------------------------------
+# AJAX HELPERS
+# --------------------------------------------------
+
+from django.http import JsonResponse
+
+@user_passes_test(cj_admin_only, login_url="cj_login")
+def cj_get_subcategories(request):
+    category_id = request.GET.get("category")
+
+    if not category_id:
+        return JsonResponse([], safe=False)
+
+    subcategories = SubCategory.objects.filter(category_id=category_id)
+
+    data = [
+        {"id": sub.id, "name": sub.name}
+        for sub in subcategories
+    ]
+
+    return JsonResponse(data, safe=False)

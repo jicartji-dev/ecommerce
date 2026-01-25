@@ -11,6 +11,7 @@ from .views import (
     cj_coupon_edit,
     cj_coupons,
     cj_dashboard,
+    cj_get_subcategories,
     cj_login,
     cj_logout,
     cj_order_detail,
@@ -82,5 +83,13 @@ urlpatterns = [
     path("coupons/add/", cj_coupon_add, name="cj_coupon_add"),
     path("coupons/edit/<int:pk>/", cj_coupon_edit, name="cj_coupon_edit"),
     path("coupons/delete/<int:pk>/", cj_coupon_delete, name="cj_coupon_delete"),
+
+
+    path(
+    "get-subcategories/",
+    cj_get_subcategories,
+    name="cj_get_subcategories"
+),
+
 
 ]

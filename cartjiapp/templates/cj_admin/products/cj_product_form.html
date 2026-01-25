@@ -58,5 +58,41 @@
         totalForms.value = count + 1;
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const categorySelect = document.getElementById("id_category");
+        const subCategorySelect = document.getElementById("id_subcategory");
+
+        if (!categorySelect || !subCategorySelect) return;
+
+        categorySelect.addEventListener("change", function () {
+
+            const categoryId = this.value;
+            subCategorySelect.innerHTML = "<option value=''>Loading...</option>";
+
+            if (!categoryId) {
+                subCategorySelect.innerHTML = "<option value=''>---------</option>";
+                return;
+            }
+
+            fetch(`/cj-admin/get-subcategories/?category=${categoryId}`)
+                .then(res => res.json())
+                .then(data => {
+
+                    subCategorySelect.innerHTML = "<option value=''>---------</option>";
+
+                    data.forEach(sub => {
+                        const option = document.createElement("option");
+                        option.value = sub.id;
+                        option.textContent = sub.name;
+                        subCategorySelect.appendChild(option);
+                    });
+
+                });
+        });
+    });
+</script>
+
 
 {% endblock %}
