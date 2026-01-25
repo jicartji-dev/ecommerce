@@ -110,7 +110,7 @@ class Product(models.Model):
     stock_status = models.CharField(
         max_length=20,
         choices=STOCK_STATUS,
-        default="out_of_stock"
+        default="in_stock"
     )
 
     created_at = models.DateTimeField(auto_now_add=True)

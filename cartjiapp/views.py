@@ -132,7 +132,7 @@ def buy_on_whatsapp(request, slug):
         Product,
         slug=slug,
         is_active=True,
-        stock_status="in_stock"
+        stock_status="in_stock"or"out_of_stock"
     )
     size = request.POST.get("size")
     color = request.POST.get("color")
