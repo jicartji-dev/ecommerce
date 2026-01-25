@@ -47,7 +47,14 @@
         <td>{{ order.status }}</td>
     
         <td>
-            <a href="{% url 'cj_order_edit' order.id %}">Edit</a>
+            <!-- <a href="{% url 'cj_order_edit' order.id %}">Edit</a> -->
+            {% if order.status != "paid" %}
+            <a href="{% url 'cj_order_edit' order.id %}">
+                Edit
+            </a>
+            {% else %}
+            <span class="badge bg-success">PAID</span>
+            {% endif %}
         </td>
     </tr>
 

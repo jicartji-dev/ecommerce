@@ -294,14 +294,44 @@ def cj_order_edit(request, id):
     sizes = Size.objects.all()
     colors = Color.objects.all()
 
+    if order.status == "paid":
+        messages.error(request, "Paid orders cannot be edited.")
+        return redirect("cj_orders")
+
     if request.method == "POST":
+
+    # 🔒 block editing paid orders
+        if order.status == "paid":
+            messages.error(request, "Paid orders cannot be edited.")
+            return redirect("cj_orders")
+
+        new_status = request.POST.get("status")
+
+        allowed_transitions = {
+            "pending": ["confirmed", "cancelled"],
+            "confirmed": ["paid", "cancelled"],
+            "paid": [],
+            "cancelled": [],
+        }
+
+        # ❌ invalid status change
+        if new_status not in allowed_transitions[order.status]:
+            messages.error(
+                request,
+                f"Invalid status change: {order.status} → {new_status}"
+            )
+            return redirect("cj_orders")
+
+        # ✅ valid update
         order.customer_name = request.POST.get("customer_name")
         order.phone = request.POST.get("phone")
         order.size = request.POST.get("size") or ""
         order.color = request.POST.get("color") or ""
-        order.status = request.POST.get("status")
+        order.status = new_status
         order.save()
+
         return redirect("cj_orders")
+
 
     return render(
         request,
