@@ -49,8 +49,21 @@
 
     <div class="cj-form-grid">
         <div class="full">
-            {{ product_form.sizes.label_tag }}
-            {{ product_form.sizes }}
+            <label>Sizes</label>
+
+<div class="cj-size-wrapper">
+    {% for checkbox in product_form.sizes %}
+        <label class="cj-size-pill">
+            {{ checkbox.tag }}
+            <span>{{ checkbox.choice_label }}</span>
+        </label>
+    {% endfor %}
+</div>
+
+<small>
+    <a href="{% url 'cj_size_add' %}" target="_blank">➕ Add new size</a>
+</small>
+            
             <small>
                 <a href="{% url 'cj_size_add' %}" target="_blank">➕ Add new size</a>
             </small>
