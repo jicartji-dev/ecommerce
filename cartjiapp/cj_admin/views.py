@@ -64,9 +64,11 @@ def cj_dashboard(request):
         "total_products": Product.objects.count(),
         "total_orders": Order.objects.count(),
         "total_customers": Order.objects.values("phone").distinct().count(),
-        "total_revenue": Order.objects.aggregate(
-            total=Sum("price")
-        )["total"] or 0,
+        # "total_revenue": Order.objects.aggregate(
+        #     total=Sum("price")
+        # )["total"] or 0,
+        "total_revenue": Order.objects.filter(status="paid")
+        .aggregate(total=Sum("price"))["total"] or 0,
     }
     return render(request, "cj_admin/cj_dashboard.html", context)
 
