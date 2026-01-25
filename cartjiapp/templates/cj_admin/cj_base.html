@@ -10,15 +10,6 @@
 </head>
 
 <body>
-    {% if messages %}
-    <div class="container mt-3">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
 
     <button class="cj-mobile-toggle" id="cjToggle">
         <i class="fa-solid fa-bars"></i>
@@ -69,7 +60,7 @@
                 <i class="fa-solid fa-palette"></i>
                 <span>Colors</span>
             </a>
-            
+
             <a href="{% url 'cj_orders' %}">
                 <i class="fa-solid fa-receipt"></i>
                 <span>Orders</span>
@@ -96,6 +87,15 @@
 
 
         <main class="cj-content">
+            {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             {% block content %}{% endblock %}
         </main>
 
@@ -104,4 +104,3 @@
 </body>
 
 </html>
-
