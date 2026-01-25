@@ -8,13 +8,61 @@
 <form method="post" enctype="multipart/form-data" class="cj-form">
     {% csrf_token %}
 
-    <h3>Product Info</h3>
-    {{ product_form.as_p }}
-    <div style="margin-top: 8px;">
-        <a href="{% url 'cj_size_add' %}" target="_blank">
-            ➕ Add new Size
-        </a>
+    <h3>Basic Information</h3>
+    <div class="cj-form-section">
+        {{ product_form.category.label_tag }}
+        {{ product_form.category }}
+    
+        {{ product_form.subcategory.label_tag }}
+        {{ product_form.subcategory }}
+    
+        {{ product_form.name.label_tag }}
+        {{ product_form.name }}
     </div>
+    
+    <hr>
+    
+    <h3>Pricing</h3>
+    <div class="cj-form-section">
+        {{ product_form.original_price.label_tag }}
+        {{ product_form.original_price }}
+    
+        {{ product_form.discount_price.label_tag }}
+        {{ product_form.discount_price }}
+    </div>
+    
+    <hr>
+    
+    <h3>Inventory & Visibility</h3>
+    <div class="cj-form-section">
+        {{ product_form.sizes.label_tag }}
+        {{ product_form.sizes }}
+        <div style="margin-top: 8px;">
+            <a href="{% url 'cj_size_add' %}" target="_blank">
+                ➕ Add new Size
+            </a>
+        </div>
+        
+    
+        {{ product_form.stock_status.label_tag }}
+        {{ product_form.stock_status }}
+    
+        {{ product_form.is_featured.label_tag }}
+        {{ product_form.is_featured }}
+    
+        {{ product_form.is_active.label_tag }}
+        {{ product_form.is_active }}
+    </div>
+    
+    <hr>
+    
+    <h3>Description</h3>
+    <div class="cj-form-section">
+        {{ product_form.description.label_tag }}
+        {{ product_form.description }}
+    </div>
+
+    
 
     <hr>
 
