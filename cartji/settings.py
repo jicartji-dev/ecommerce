@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cartjiapp',
     'cloudinary',
-    'cloudinary_storage',
+    'cloudinary_storage','django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
