@@ -14,5 +14,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('cartjiapp.urls')),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    re_path(r"^(?P<path>.*)$
+    re_path(r"^(?P<path>.*)$", serve),
 ]
