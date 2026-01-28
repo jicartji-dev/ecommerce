@@ -4,10 +4,13 @@ from django.urls import path, include
 
 
 from django.contrib.sitemaps.views import sitemap
-from cartjiapp.sitemaps import StaticSitemap
+from cartjiapp.sitemaps import StaticSitemap, ProductSitemap
+
 sitemaps = {
     "static": StaticSitemap,
+    "products": ProductSitemap,
 }
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
