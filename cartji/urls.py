@@ -10,8 +10,9 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path('admin/', admin.site.urls),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
+    
     path('', include('cartjiapp.urls')),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     
