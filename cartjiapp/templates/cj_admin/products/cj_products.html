@@ -20,20 +20,20 @@
 
     <select name="status">
         <option value="">All Status</option>
-        <option value="active" {% if request.GET.status=="active" %}selected{% endif %}>Active</option>
-        <option value="inactive" {% if request.GET.status=="inactive" %}selected{% endif %}>Inactive</option>
+        <option value="active" {% if request.GET.status == "active" %}selected{% endif %}>Active</option>
+        <option value="inactive" {% if request.GET.status == "inactive" %}selected{% endif %}>Inactive</option>
     </select>
 
     <select name="stock">
         <option value="">All Stock</option>
-        <option value="in_stock" {% if request.GET.stock=="in_stock" %}selected{% endif %}>In Stock</option>
-        <option value="out_of_stock" {% if request.GET.stock=="out_of_stock" %}selected{% endif %}>Out of Stock</option>
+        <option value="in_stock" {% if request.GET.stock == "in_stock" %}selected{% endif %}>In Stock</option>
+        <option value="out_of_stock" {% if request.GET.stock == "out_of_stock" %}selected{% endif %}>Out of Stock</option>
     </select>
 
     <select name="featured">
         <option value="">Featured?</option>
-        <option value="yes" {% if request.GET.featured=="yes" %}selected{% endif %}>Yes</option>
-        <option value="no" {% if request.GET.featured=="no" %}selected{% endif %}>No</option>
+        <option value="yes" {% if request.GET.featured == "yes" %}selected{% endif %}>Yes</option>
+        <option value="no" {% if request.GET.featured == "no" %}selected{% endif %}>No</option>
     </select>
 
     <button type="submit" class="cj-btn primary">Filter</button>
