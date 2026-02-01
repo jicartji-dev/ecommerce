@@ -195,15 +195,16 @@ def cj_size_delete(request, pk):
 # --------------------------------------------------
 # PRODUCTS
 # --------------------------------------------------
-
 @user_passes_test(cj_admin_only, login_url="cj_login")
 def cj_products(request):
-    products = Product.objects.select_related("category").all()
+    products = Product.objects.select_related(
+        "category", "subcategory"
+    ).all()
 
-    # 🔍 filters
+    # filters
     search = request.GET.get("search")
     category = request.GET.get("category")
-    status = request.GET.get("status")
+    subcategory = request.GET.get("subcategory")
     stock = request.GET.get("stock")
     featured = request.GET.get("featured")
 
@@ -213,8 +214,8 @@ def cj_products(request):
     if category:
         products = products.filter(category_id=category)
 
-    if status in ["active", "inactive"]:
-        products = products.filter(is_active=(status == "active"))
+    if subcategory:
+        products = products.filter(subcategory_id=subcategory)
 
     if stock in ["in_stock", "out_of_stock"]:
         products = products.filter(stock_status=stock)
@@ -230,6 +231,9 @@ def cj_products(request):
         {
             "products": products,
             "categories": Category.objects.all(),
+            "subcategories": SubCategory.objects.all(),
+            "selected_category": int(category) if category and category.isdigit() else None,
+            "selected_subcategory": int(subcategory) if subcategory and subcategory.isdigit() else None,
         }
     )
 

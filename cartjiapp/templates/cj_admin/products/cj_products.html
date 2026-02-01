@@ -9,19 +9,23 @@
 <form method="get" class="cj-filter-bar">
     <input type="text" name="search" placeholder="Search product..." value="{{ request.GET.search }}">
 
-    <select name="category">
+    <select name="category" id="category-select">
         <option value="">All Categories</option>
         {% for cat in categories %}
-        <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+        <option value="{{ cat.id }}" {% if selected_category == cat.id %}selected{% endif %}>
             {{ cat.name }}
         </option>
         {% endfor %}
     </select>
 
-    <select name="status">
-        <option value="">All Status</option>
-        <option value="active" {% if request.GET.status == "active" %}selected{% endif %}>Active</option>
-        <option value="inactive" {% if request.GET.status == "inactive" %}selected{% endif %}>Inactive</option>
+
+    <select name="subcategory" id="subcategory-select">
+        <option value="">All Sub Categories</option>
+        {% for sub in subcategories %}
+        <option value="{{ sub.id }}" {% if selected_subcategory == sub.id %}selected{% endif %}>
+            {{ sub.category.name }} → {{ sub.name }}
+        </option>
+        {% endfor %}
     </select>
 
     <select name="stock">
@@ -115,5 +119,37 @@
         {% endfor %}
     </tbody>
 </table>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const categorySelect = document.getElementById("category-select");
+        const subcategorySelect = document.getElementById("subcategory-select");
+
+        categorySelect.addEventListener("change", function () {
+            const categoryId = this.value;
+
+            // reset subcategory
+            subcategorySelect.innerHTML =
+                '<option value="">All Sub Categories</option>';
+
+            if (!categoryId) return;
+
+            fetch(`/cj-admin/get-subcategories/?category=${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(sub => {
+                        const option = document.createElement("option");
+                        option.value = sub.id;
+                        option.textContent = sub.name;
+                        subcategorySelect.appendChild(option);
+                    });
+                });
+        });
+    });
+</script>
+
+
 
 {% endblock %}
