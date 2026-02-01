@@ -86,6 +86,7 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
                     <input type="hidden" name="size" id="formSize">
                     <input type="hidden" name="color" id="formColor">
+                    <input type="hidden" name="coupon_code" id="formCouponCode">
                     <input type="hidden" name="final_price" id="formFinalPrice">
                     
 
@@ -208,7 +209,9 @@ function handleOrderClick(btn) {
 
     // 🔹 CASE 1: NO COUPON → direct order
     if (!couponCode) {
+        document.getElementById("formCouponCode").value = "";
         document.getElementById("formFinalPrice").value = basePrice;
+
         btn.closest("form").submit();   // 🔥 ORDER CREATED HERE
         return;
     }
@@ -244,8 +247,10 @@ function handleOrderClick(btn) {
 
             orderBtn.style.display = "block";
             orderBtn.onclick = () => {
+                document.getElementById("formCouponCode").value = couponCode;
                 document.getElementById("formFinalPrice").value = finalPrice;
                 btn.closest("form").submit(); // 🔥 ORDER CREATED HERE
+
             };
 
             modal.show();

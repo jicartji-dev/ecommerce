@@ -127,37 +127,98 @@ from .models import Order
 from .utils import generate_order_id
 
 
-def buy_on_whatsapp(request, slug):
-    product = get_object_or_404(
-        Product,
-        slug=slug,
-        is_active=True,
-    )
-    size = request.POST.get("size")
-    color = request.POST.get("color")
-    final_price = request.POST.get("final_price") or product.selling_price
+# def buy_on_whatsapp(request, slug):
+#     product = get_object_or_404(
+#         Product,
+#         slug=slug,
+#         is_active=True,
+#     )
+#     size = request.POST.get("size")
+#     color = request.POST.get("color")
+#     final_price = request.POST.get("final_price") or product.selling_price
 
-    order = Order.objects.create(
-         order_id=generate_order_id(),
-         product=product,
-         price=final_price,
-         size=size,
-         color=color,
-         payment_method="whatsapp",
-         status="pending",
-     )
+#     order = Order.objects.create(
+#          order_id=generate_order_id(),
+#          product=product,
+#          price=final_price,
+#          size=size,
+#          color=color,
+#          payment_method="whatsapp",
+#          status="pending",
+#      )
 
     
 
 
+#     message = f"""
+# Hi CartJi 👋
+# I want to order:
+
+# Product: {product.name}
+# Size: {order.size}
+# Color: {order.color}
+# Price: ₹{final_price}
+# Order ID: {order.order_id}
+
+# Please guide me further.
+# """
+
+#     whatsapp_url = (
+#         "https://wa.me/918303278845"
+#         f"?text={quote(message)}"
+#     )
+
+#     return redirect(whatsapp_url)
+
+
+
+def buy_on_whatsapp(request, slug):
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+
+    size = request.POST.get("size")
+    color = request.POST.get("color")
+    final_price = request.POST.get("final_price") or product.selling_price
+    coupon_code = request.POST.get("coupon_code", "").strip()
+
+    # full product link
+    product_url = request.build_absolute_uri(product.get_absolute_url())
+
+    order = Order.objects.create(
+        order_id=generate_order_id(),
+        product=product,
+        price=final_price,
+        size=size,
+        color=color,
+        payment_method="whatsapp",
+        status="pending",
+    )
+
+    # 🔹 BASE MESSAGE (always)
     message = f"""
 Hi CartJi 👋
 I want to order:
 
 Product: {product.name}
-Size: {order.size}
-Color: {order.color}
-Price: ₹{final_price}
+Size: {size}
+Color: {color}
+MRP: ₹{product.original_price}
+"""
+
+    # 🔹 ADD DISCOUNT INFO ONLY IF COUPON USED
+    if coupon_code and product.original_price and float(final_price) < float(product.original_price):
+        discount_amount = float(product.original_price) - float(final_price)
+        message += f"""
+Discount Applied: ₹{int(discount_amount)}
+Coupon Code: {coupon_code}
+"""
+
+    # 🔹 FINAL PRICE + LINK (always)
+    message += f"""
+Final Price: ₹{final_price}
+
+Product Link:
+{product_url}
+
 Order ID: {order.order_id}
 
 Please guide me further.
