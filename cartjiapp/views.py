@@ -207,7 +207,7 @@ Color: {color}
     if coupon_code and product.original_price and float(final_price) < float(product.original_price):
         discount_amount = float(product.selling_price) - float(final_price)
         message += f"""
-        Sellinf Price: ₹{product.selling_price}
+Selling Price: ₹{product.selling_price}
 Discount Applied: ₹{int(discount_amount)}
 Coupon Code: {coupon_code}
 """
