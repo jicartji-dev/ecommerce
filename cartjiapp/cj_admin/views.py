@@ -198,8 +198,40 @@ def cj_size_delete(request, pk):
 
 @user_passes_test(cj_admin_only, login_url="cj_login")
 def cj_products(request):
-    products = Product.objects.all().order_by("-created_at")
-    return render(request, "cj_admin/products/cj_products.html", {"products": products})
+    products = Product.objects.select_related("category").all()
+
+    # 🔍 filters
+    search = request.GET.get("search")
+    category = request.GET.get("category")
+    status = request.GET.get("status")
+    stock = request.GET.get("stock")
+    featured = request.GET.get("featured")
+
+    if search:
+        products = products.filter(name__icontains=search)
+
+    if category:
+        products = products.filter(category_id=category)
+
+    if status in ["active", "inactive"]:
+        products = products.filter(is_active=(status == "active"))
+
+    if stock in ["in_stock", "out_of_stock"]:
+        products = products.filter(stock_status=stock)
+
+    if featured in ["yes", "no"]:
+        products = products.filter(is_featured=(featured == "yes"))
+
+    products = products.order_by("-created_at")
+
+    return render(
+        request,
+        "cj_admin/products/cj_products.html",
+        {
+            "products": products,
+            "categories": Category.objects.all(),
+        }
+    )
 
 
 @user_passes_test(cj_admin_only, login_url="cj_login")

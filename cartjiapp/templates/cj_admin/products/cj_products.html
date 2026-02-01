@@ -6,6 +6,39 @@
 <a href="{% url 'cj_product_add' %}" class="cj-btn primary">
     + Add Product
 </a>
+<form method="get" class="cj-filter-bar">
+    <input type="text" name="search" placeholder="Search product..." value="{{ request.GET.search }}">
+
+    <select name="category">
+        <option value="">All Categories</option>
+        {% for cat in categories %}
+        <option value="{{ cat.id }}" {% if request.GET.category==cat.id|stringformat:"s" %}selected{% endif %}>
+            {{ cat.name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <select name="status">
+        <option value="">All Status</option>
+        <option value="active" {% if request.GET.status=="active" %}selected{% endif %}>Active</option>
+        <option value="inactive" {% if request.GET.status=="inactive" %}selected{% endif %}>Inactive</option>
+    </select>
+
+    <select name="stock">
+        <option value="">All Stock</option>
+        <option value="in_stock" {% if request.GET.stock=="in_stock" %}selected{% endif %}>In Stock</option>
+        <option value="out_of_stock" {% if request.GET.stock=="out_of_stock" %}selected{% endif %}>Out of Stock</option>
+    </select>
+
+    <select name="featured">
+        <option value="">Featured?</option>
+        <option value="yes" {% if request.GET.featured=="yes" %}selected{% endif %}>Yes</option>
+        <option value="no" {% if request.GET.featured=="no" %}selected{% endif %}>No</option>
+    </select>
+
+    <button type="submit" class="cj-btn primary">Filter</button>
+    <a href="{% url 'cj_products' %}" class="cj-btn">Reset</a>
+</form>
 
 <table class="cj-table">
     <thead>

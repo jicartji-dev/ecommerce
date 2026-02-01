@@ -231,6 +231,22 @@ body {
 
 /* PRODUCTS TABLE */
 
+.cj-filter-bar {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.cj-filter-bar input,
+.cj-filter-bar select {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+
+
 .cj-table {
     width: 100%;
     border-collapse: collapse;
@@ -242,9 +258,9 @@ body {
 
 .cj-table th,
 .cj-table td {
-    padding: 12px 14px;
+    padding: 15px 10px;
     border-bottom: 1px solid #e5e7eb;
-    font-size: 14px;
+    font-size: 11px;
 }
 
 .cj-table th {
