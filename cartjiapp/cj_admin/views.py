@@ -195,13 +195,16 @@ def cj_size_delete(request, pk):
 # --------------------------------------------------
 # PRODUCTS
 # --------------------------------------------------
+
+
+from django.template.loader import render_to_string
+
 @user_passes_test(cj_admin_only, login_url="cj_login")
 def cj_products(request):
     products = Product.objects.select_related(
         "category", "subcategory"
     ).all()
 
-    # filters
     search = request.GET.get("search")
     category = request.GET.get("category")
     subcategory = request.GET.get("subcategory")
@@ -224,6 +227,15 @@ def cj_products(request):
         products = products.filter(is_featured=(featured == "yes"))
 
     products = products.order_by("-created_at")
+
+    # 🔥 AJAX response
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        html = render_to_string(
+            "cj_admin/products/_products_table.html",
+            {"products": products},
+            request=request
+        )
+        return JsonResponse({"html": html})
 
     return render(
         request,

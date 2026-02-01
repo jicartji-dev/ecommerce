@@ -44,81 +44,9 @@
     <a href="{% url 'cj_products' %}" class="cj-btn">Reset</a>
 </form>
 
-<table class="cj-table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>MRP</th>
-            <th>Selling</th>
-            <th>Stock</th>
-            <th>Featured</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-
-
-    <tbody>
-        {% for product in products %}
-        <tr>
-            <td>{{ product.name }}</td>
-        
-            <td>
-                {{ product.category.name }}
-            </td>
-        
-            <td>₹{{ product.original_price }}</td>
-        
-            <td>
-                ₹{{ product.selling_price }}
-                {% if product.discount_percentage %}
-                <small>({{ product.discount_percentage }}% OFF)</small>
-                {% endif %}
-            </td>
-        
-            <td>
-                {% if product.stock_status == "in_stock" %}
-                <span class="cj-badge success">In Stock</span>
-                {% else %}
-                <span class="cj-badge danger">Out</span>
-                {% endif %}
-            </td>
-        
-            <td>
-                {% if product.is_featured %}
-                <span class="cj-badge success">Yes</span>
-                {% else %}
-                <span class="cj-badge">No</span>
-                {% endif %}
-            </td>
-        
-            <td>
-                {% if product.is_active %}
-                <span class="cj-badge success">Active</span>
-                {% else %}
-                <span class="cj-badge danger">Inactive</span>
-                {% endif %}
-            </td>
-        
-            <td>
-                <a href="{% url 'cj_product_edit' product.id %}" class="cj-btn">
-                    Edit
-                </a>
-        
-                <a href="{% url 'cj_product_delete' product.id %}" class="cj-btn danger">
-                    Delete
-                </a>
-            </td>
-        </tr>
-
-        {% empty %}
-        <tr>
-            <td colspan="4">No products found</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div id="products-table">
+    {% include "cj_admin/products/_products_table.html" %}
+</div>
 
 
 
@@ -136,17 +64,49 @@
 
             if (!categoryId) return;
 
-            fetch(`/cj-admin/get-subcategories/?category=${categoryId}`)
+            fetch("{% url 'cj_get_subcategories' %}?category=" + categoryId)
                 .then(response => response.json())
                 .then(data => {
+                    const selectedSub = new URLSearchParams(window.location.search).get("subcategory");
+
                     data.forEach(sub => {
                         const option = document.createElement("option");
                         option.value = sub.id;
                         option.textContent = sub.name;
+
+                        if (selectedSub == sub.id) {
+                            option.selected = true;
+                        }
+
                         subcategorySelect.appendChild(option);
                     });
                 });
+
         });
+    
+        const filterForm = document.querySelector(".cj-filter-bar");
+        const tableWrapper = document.getElementById("products-table");
+
+        filterForm.addEventListener("change", submitFilters);
+        filterForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            submitFilters();
+        });
+
+        function submitFilters() {
+            const formData = new FormData(filterForm);
+            const params = new URLSearchParams(formData).toString();
+
+            fetch(`?${params}`, {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    tableWrapper.innerHTML = data.html;
+                });
+        }
     });
 </script>
 
