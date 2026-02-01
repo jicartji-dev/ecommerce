@@ -201,12 +201,11 @@ I want to order:
 Product: {product.name}
 Size: {size}
 Color: {color}
-MRP: ₹{product.original_price}
 """
 
     # 🔹 ADD DISCOUNT INFO ONLY IF COUPON USED
     if coupon_code and product.original_price and float(final_price) < float(product.original_price):
-        discount_amount = float(product.original_price) - float(final_price)
+        discount_amount = float(product.selling_price) - float(final_price)
         message += f"""
 Discount Applied: ₹{int(discount_amount)}
 Coupon Code: {coupon_code}
