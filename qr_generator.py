@@ -1,6 +1,6 @@
-import qrcode
+# import qrcode
 
-url = "https://cartji.onrender.com"
+# url = "https://cartji.onrender.com"
 
-qr = qrcode.make(url)
-qr.save("static/cartji_qr.png")
+# qr = qrcode.make(url)
+# qr.save("static/cartji_qr.png")
