@@ -8,3 +8,4 @@ cloudinary
 django-cloudinary-storage
 whitenoise
 pillow
+qrcode[pil]
