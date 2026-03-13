@@ -2,6 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Coupon, Product, Review, SubCategory
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 def home(request):
@@ -12,16 +15,48 @@ def home(request):
 
 
 
-def user_login(req):
-    return render(req,'cartjiapp/user_login.html')
+def user_register(request):
 
-def user_register(req):
-    return render(req,'cartjiapp/user_register.html')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
 
-def user_forgot(req):
-    return render(req,'cartjiapp/user_forgot.html')
+        if User.objects.filter(username=username).exists():
+            messages.error(request,"Username already exists")
+            return redirect("register")
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+
+        login(request,user)
+        return redirect("home")
+
+    return render(request,'cartjiapp/user_register.html')
 
 
+def user_login(request):
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request,username=username,password=password)
+
+        if user is not None:
+            login(request,user)
+            return redirect("home")
+        else:
+            messages.error(request,"Invalid credentials")
+
+    return render(request,'cartjiapp/user_login.html')
+
+
+def user_forgot(request):
+    return render(request,'cartjiapp/user_forgot.html')
 
 
 
