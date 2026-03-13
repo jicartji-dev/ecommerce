@@ -1,7 +1,7 @@
 from atexit import register
 
 from django.urls import include, path
-from .views import about, buy_on_whatsapp, career_full_time, career_part_time,category_products, check_coupon, contact, faq_page, forgot, health, home, load_subcategories, login, privacy, product_detail, product_list, returns_policy, shipping_policy, store_policy, subcategory_products, terms, user_forgot, user_login, user_register
+from .views import about, buy_on_whatsapp, career_full_time, career_part_time,category_products, check_coupon, contact, faq_page, health, home, load_subcategories, privacy, product_detail, product_list, returns_policy, shipping_policy, store_policy, subcategory_products, terms, user_forgot, user_login, user_register
 from django.conf import settings
 from django.conf.urls.static import static
 
