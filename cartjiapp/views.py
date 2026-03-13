@@ -12,13 +12,13 @@ def home(request):
 
 
 
-def login(req):
+def user_login(req):
     return render(req,'cartjiapp/user_login.html')
 
-def register(req):
+def user_register(req):
     return render(req,'cartjiapp/user_register.html')
 
-def forgot(req):
+def user_forgot(req):
     return render(req,'cartjiapp/user_forgot.html')
 
 
