@@ -10,6 +10,22 @@ def home(request):
     reviews = Review.objects.filter(is_active=True).order_by("-created_at")[:8]
     return render(request, 'cartjiapp/index.html', {'products': products, "reviews": reviews,"categories":categories})
 
+
+
+def login(req):
+    return render(req,'cartjiapp/user_login.html')
+
+def register(req):
+    return render(req,'cartjiapp/user_register.html')
+
+def forgot(req):
+    return render(req,'cartjiapp/user_forgot.html')
+
+
+
+
+
+
 def product_list(request):
     sort = request.GET.get("sort")
     products = Product.objects.filter(is_active=True)
