@@ -79,6 +79,16 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
                 <input type="hidden" id="selectedSize">
                 <input type="hidden" id="selectedColor">
+                {% if messages %}
+                <div class="container mt-3">
+                    {% for message in messages %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <button type="button" class="btn btn-success btn-lg product-cta" onclick="goToCheckout('{{ product.slug }}')">
                     Buy Now
                 </button>
@@ -149,7 +159,7 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
         const variantMsg = document.getElementById("variantMessage");
 
         if (!selectedSize || !selectedColor) {
-            variantMsg.innerText = "Please select size and color first.";
+            variantMsg.innerText = "⚠ Please select size & color to continue.";
             variantMsg.style.display = "block";
             return;
         }

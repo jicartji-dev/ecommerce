@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Coupon, Product, Review, SubCategory
 from django.http import HttpResponse
+from django.contrib import messages
 
 
 
@@ -197,9 +198,12 @@ def checkout(request, slug):
     # 🔥 get from URL
     size = request.GET.get("size")
     color = request.GET.get("color")
-        # 🔒 SAFETY CHECK
+
+
     if not size or not color:
+        messages.error(request, "Please select size and color before proceeding to checkout.")
         return redirect("product_detail", slug=slug)
+
 
     if request.method == "POST":
         order = Order.objects.create(
