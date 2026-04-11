@@ -206,6 +206,7 @@ def checkout(request, slug):
             delivery_address=request.POST.get("address"),
             payment_method="online",
             payment_screenshot=request.FILES.get("screenshot"),
+            UTR=request.POST.get("utr"),
             status="pending"
         )
 
