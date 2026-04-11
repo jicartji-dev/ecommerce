@@ -231,7 +231,8 @@ class Order(models.Model):
 
 
     customer_name = models.CharField(max_length=100, blank=True)
-    phone = models.CharField(max_length=15, blank=True)
+    phone = models.CharField(max_length=10, blank=True)
+    UTR = models.CharField(max_length=12,blank=True,null=True)
 
     payment_method = models.CharField(
         max_length=20,
