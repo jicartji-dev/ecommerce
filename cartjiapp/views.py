@@ -194,6 +194,13 @@ Please guide me further.
 def checkout(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
 
+    # 🔥 get from URL
+    size = request.GET.get("size")
+    color = request.GET.get("color")
+        # 🔒 SAFETY CHECK
+    if not size or not color:
+        return redirect("product_detail", slug=slug)
+
     if request.method == "POST":
         order = Order.objects.create(
             order_id=generate_order_id(),
@@ -212,9 +219,11 @@ def checkout(request, slug):
 
         return render(request, "cartjiapp/order_success.html", {"order": order})
 
-    return render(request, "cartjiapp/checkout.html", {"product": product})
-
-
+    return render(request, "cartjiapp/checkout.html", {
+        "product": product,
+        "size": size,
+        "color": color
+    })
 
 
 

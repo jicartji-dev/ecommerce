@@ -79,9 +79,9 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
                 <input type="hidden" id="selectedSize">
                 <input type="hidden" id="selectedColor">
-                <a href="{% url 'checkout' product.slug %}" class="btn btn-success btn-lg product-cta">
+                <button type="button" class="btn btn-success btn-lg product-cta" onclick="goToCheckout('{{ product.slug }}')">
                     Buy Now
-                </a>
+                </button>
 
                 <!-- <form method="POST" action="{% url 'buy_on_whatsapp' product.slug %}">
                     {% csrf_token %}
@@ -143,7 +143,21 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
 
 
+<script>
+    function goToCheckout(slug) {
 
+        const variantMsg = document.getElementById("variantMessage");
+
+        if (!selectedSize || !selectedColor) {
+            variantMsg.innerText = "Please select size and color first.";
+            variantMsg.style.display = "block";
+            return;
+        }
+
+        // redirect with data
+        window.location.href = `/checkout/${slug}/?size=${selectedSize}&color=${selectedColor}`;
+    }
+</script>
 
 <script>
     function selectSize(size, btn) {
