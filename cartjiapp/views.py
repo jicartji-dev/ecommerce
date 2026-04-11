@@ -130,49 +130,6 @@ from .models import Order
 from .utils import generate_order_id
 
 
-# def buy_on_whatsapp(request, slug):
-#     product = get_object_or_404(
-#         Product,
-#         slug=slug,
-#         is_active=True,
-#     )
-#     size = request.POST.get("size")
-#     color = request.POST.get("color")
-#     final_price = request.POST.get("final_price") or product.selling_price
-
-#     order = Order.objects.create(
-#          order_id=generate_order_id(),
-#          product=product,
-#          price=final_price,
-#          size=size,
-#          color=color,
-#          payment_method="whatsapp",
-#          status="pending",
-#      )
-
-    
-
-
-#     message = f"""
-# Hi CartJi 👋
-# I want to order:
-
-# Product: {product.name}
-# Size: {order.size}
-# Color: {order.color}
-# Price: ₹{final_price}
-# Order ID: {order.order_id}
-
-# Please guide me further.
-# """
-
-#     whatsapp_url = (
-#         "https://wa.me/918303278845"
-#         f"?text={quote(message)}"
-#     )
-
-#     return redirect(whatsapp_url)
-
 
 
 def buy_on_whatsapp(request, slug):
@@ -233,6 +190,31 @@ Please guide me further.
     )
 
     return redirect(whatsapp_url)
+
+def checkout(request, slug):
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+
+    if request.method == "POST":
+        order = Order.objects.create(
+            order_id=generate_order_id(),
+            product=product,
+            price=request.POST.get("final_price") or product.selling_price,
+            size=request.POST.get("size"),
+            color=request.POST.get("color"),
+            customer_name=request.POST.get("name"),
+            phone=request.POST.get("phone"),
+            delivery_address=request.POST.get("address"),
+            payment_method="online",
+            payment_screenshot=request.FILES.get("screenshot"),
+            status="pending"
+        )
+
+        return render(request, "cartjiapp/order_success.html", {"order": order})
+
+    return render(request, "cartjiapp/checkout.html", {"product": product})
+
+
+
 
 
 
