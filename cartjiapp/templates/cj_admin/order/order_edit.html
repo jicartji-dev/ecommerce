@@ -3,7 +3,7 @@
 
 <h2>Edit Order – {{ order.order_id }}</h2>
 
-<form method="post">
+    <form method="post" enctype="multipart/form-data"></form>
     {% csrf_token %}
 
     <label>Customer Name</label>
@@ -36,11 +36,13 @@
     </select>
     <br>
     <label>Payment Screenshot</label><br>
-
+    
     {% if order.payment_screenshot %}
-    <img src="{{ order.payment_screenshot.url }}" alt="Screenshot" width="200">
+    <img src="{{ order.payment_screenshot.url }}" width="200">
     <br>
-    <a href="{{ order.payment_screenshot.url }}" target="_blank">View Full Image</a>
+    <a href="{{ order.payment_screenshot.url }}" target="_blank">
+        View Full Image
+    </a>
     {% else %}
     <p>No screenshot uploaded</p>
     {% endif %}
