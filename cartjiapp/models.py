@@ -246,8 +246,7 @@ class Order(models.Model):
     )
 
     delivery_address = models.TextField(blank=True, null=True)
-    payment_screenshot = models.CloudinaryField("payments", blank=True, null=True)
-
+    payment_screenshot = CloudinaryField("payments", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

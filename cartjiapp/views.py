@@ -216,7 +216,7 @@ def checkout(request, slug):
             phone=request.POST.get("phone"),
             delivery_address=request.POST.get("address"),
             payment_method="online",
-            payment_screenshot=request.FILES.get("screenshot"),
+            payment_screenshot=request.FILES.get("payment_screenshot"),
             UTR=request.POST.get("utr"),
             status="pending"
         )
