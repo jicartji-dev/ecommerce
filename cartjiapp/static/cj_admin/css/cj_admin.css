@@ -21,6 +21,7 @@ body {
     text-align: center;
     margin-bottom: 30px;
 }
+
 .cj-sidebar a {
     display: flex;
     align-items: center;
@@ -40,6 +41,7 @@ body {
 .cj-sidebar a:hover {
     background: #1f2937;
 }
+
 .cj-sidebar a.active {
     background: #2563eb;
     color: white;
@@ -385,6 +387,7 @@ body {
     font-size: 13px;
     color: #475569;
 }
+
 .cj-image-form {
     background: #f9fafb;
     padding: 10px;
@@ -401,9 +404,9 @@ body {
     background: #b91c1c;
 }
 
-/* =========================
+/*   ==    ==    ==    ==    ==    ==    ==    ==    ==    ==    ==    ==  =
    MOBILE SIDEBAR TOGGLE
-========================= */
+   ==    ==    ==    ==    ==    ==    ==    ==    ==    ==    ==     ==  = */
 
 .cj-mobile-toggle {
     display: none;
@@ -504,6 +507,7 @@ body {
 .cj-form-grid .full {
     grid-column: span 2;
 }
+
 .cj-image-card {
     background: #ffffff;
     padding: 14px;
@@ -543,7 +547,7 @@ body {
     transition: all 0.2s ease;
 }
 
-.cj-size-pill input:checked + span {
+.cj-size-pill input:checked+span {
     background: #2563eb;
     color: white;
     border-color: #2563eb;
@@ -552,4 +556,3 @@ body {
 .cj-size-pill span:hover {
     border-color: #2563eb;
 }
-

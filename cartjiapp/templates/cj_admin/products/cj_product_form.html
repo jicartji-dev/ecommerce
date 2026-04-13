@@ -9,88 +9,88 @@
     {% csrf_token %}
 
     <div class="cj-form-card">
-    <h3>Basic Information</h3>
+        <h3>Basic Information</h3>
 
-    <div class="cj-form-grid">
-        <div>
-            {{ product_form.category.label_tag }}
-            {{ product_form.category }}
-        </div>
+        <div class="cj-form-grid">
+            <div>
+                {{ product_form.category.label_tag }}
+                {{ product_form.category }}
+            </div>
 
-        <div>
-            {{ product_form.subcategory.label_tag }}
-            {{ product_form.subcategory }}
-        </div>
+            <div>
+                {{ product_form.subcategory.label_tag }}
+                {{ product_form.subcategory }}
+            </div>
 
-        <div class="full">
-            {{ product_form.name.label_tag }}
-            {{ product_form.name }}
-        </div>
-    </div>
-    </div>
-
-<div class="cj-form-card">
-    <h3>Pricing</h3>
-
-    <div class="cj-form-grid">
-        <div>
-            {{ product_form.original_price.label_tag }}
-            {{ product_form.original_price }}
-        </div>
-
-        <div>
-            {{ product_form.discount_price.label_tag }}
-            {{ product_form.discount_price }}
+            <div class="full">
+                {{ product_form.name.label_tag }}
+                {{ product_form.name }}
+            </div>
         </div>
     </div>
-</div>
+
     <div class="cj-form-card">
-    <h3>Inventory & Visibility</h3>
+        <h3>Pricing</h3>
 
-    <div class="cj-form-grid">
-        <div class="full">
-            <label>Sizes</label>
+        <div class="cj-form-grid">
+            <div>
+                {{ product_form.original_price.label_tag }}
+                {{ product_form.original_price }}
+            </div>
 
-<div class="cj-size-wrapper">
-    {% for checkbox in product_form.sizes %}
-        <label class="cj-size-pill">
-            {{ checkbox.tag }}
-            <span>{{ checkbox.choice_label }}</span>
-        </label>
-    {% endfor %}
-</div>
-
-<small>
-    <a href="{% url 'cj_size_add' %}" target="_blank">➕ Add new size</a>
-</small>
-            
-        </div>
-
-        <div>
-            {{ product_form.stock_status.label_tag }}
-            {{ product_form.stock_status }}
-        </div>
-
-        <div>
-            {{ product_form.is_featured.label_tag }}
-            {{ product_form.is_featured }}
-        </div>
-
-        <div>
-            {{ product_form.is_active.label_tag }}
-            {{ product_form.is_active }}
+            <div>
+                {{ product_form.discount_price.label_tag }}
+                {{ product_form.discount_price }}
+            </div>
         </div>
     </div>
+    <div class="cj-form-card">
+        <h3>Inventory & Visibility</h3>
+
+        <div class="cj-form-grid">
+            <div class="full">
+                <label>Sizes</label>
+
+                <div class="cj-size-wrapper">
+                    {% for checkbox in product_form.sizes %}
+                    <label class="cj-size-pill">
+                        {{ checkbox.tag }}
+                        <span>{{ checkbox.choice_label }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <small>
+                    <a href="{% url 'cj_size_add' %}" target="_blank">➕ Add new size</a>
+                </small>
+
+            </div>
+
+            <div>
+                {{ product_form.stock_status.label_tag }}
+                {{ product_form.stock_status }}
+            </div>
+
+            <div>
+                {{ product_form.is_featured.label_tag }}
+                {{ product_form.is_featured }}
+            </div>
+
+            <div>
+                {{ product_form.is_active.label_tag }}
+                {{ product_form.is_active }}
+            </div>
+        </div>
     </div>
-    
-    
+
+
     <h3>Description</h3>
     <div class="cj-form-section">
         {{ product_form.description.label_tag }}
         {{ product_form.description }}
     </div>
 
-    
+
 
     <hr>
 
@@ -106,17 +106,17 @@
     <div id="image-formset">
         {% for form in image_formset %}
         <div class="cj-image-card">
-    {{ form.image.label_tag }}
-    {{ form.image }}
+            {{ form.image.label_tag }}
+            {{ form.image }}
 
-    {{ form.color.label_tag }}
-    {{ form.color }}
+            {{ form.color.label_tag }}
+            {{ form.color }}
 
-    <div style="margin-top:8px">
-        {{ form.DELETE }} Delete
-    </div>
+            <div style="margin-top:8px">
+                {{ form.DELETE }} Delete
+            </div>
         </div>
-        
+
         {% endfor %}
     </div>
 
@@ -146,11 +146,11 @@
 
         newForm.querySelectorAll("input, select").forEach(el => {
             el.value = "";
-            if (el.type === "checkbox") el.checked = false;
-        });
+            if (el.type ==  = "checkbox") el.checked = false;
+    });
 
-        formset.appendChild(newForm);
-        totalForms.value = count + 1;
+    formset.appendChild(newForm);
+    totalForms.value = count + 1;
     }
 </script>
 <script>
