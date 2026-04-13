@@ -204,8 +204,15 @@ def checkout(request, slug):
         messages.error(request, "Please select size and color before proceeding to checkout.")
         return redirect("product_detail", slug=slug)
 
-
     if request.method == "POST":
+
+        phone = request.POST.get("phone")
+
+        # 🔥 VALIDATION
+        if not phone.isdigit() or len(phone) != 10:
+            messages.error(request, "Phone number must be exactly 10 digits")
+            return redirect(request.path)
+
         order = Order.objects.create(
             order_id=generate_order_id(),
             product=product,
@@ -213,14 +220,14 @@ def checkout(request, slug):
             size=request.POST.get("size"),
             color=request.POST.get("color"),
             customer_name=request.POST.get("name"),
-            phone=request.POST.get("phone"),
+            phone=phone,
             delivery_address=request.POST.get("address"),
             payment_method="online",
             payment_screenshot=request.FILES.get("payment_screenshot"),
             UTR=request.POST.get("utr"),
             status="pending"
         )
-
+        
         return render(request, "cartjiapp/order_success.html", {"order": order})
 
     return render(request, "cartjiapp/checkout.html", {

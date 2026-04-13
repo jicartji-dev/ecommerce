@@ -15,7 +15,8 @@
             {% csrf_token %}
 
             <input type="text" name="name" class="form-control mb-2" placeholder="Full Name" required>
-            <input type="text" name="phone" class="form-control mb-2" placeholder="Phone Number" required>
+            <input type="text" name="phone" class="form-control mb-2" placeholder="Phone Number" required maxlength="10"
+    pattern="[0-9]{10}" title="Enter exactly 10 digit phone number">
             <textarea name="address" class="form-control mb-3" placeholder="Delivery Address" required></textarea>
 
             <h5>Pay via UPI</h5>
@@ -29,7 +30,13 @@
             <input type="hidden" name="size" value="{{ size }}">
             <input type="hidden" name="color" value="{{ color }}">
             <input type="hidden" name="final_price" value="{{ product.selling_price }}">
-            
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
             <button type="submit" class="btn btn-success w-100">
                 Confirm Order
             </button>
