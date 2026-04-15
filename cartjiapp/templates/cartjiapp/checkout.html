@@ -30,7 +30,7 @@
             <!-- ✅ YOUR QR (OLD) -->
             <img src="{% static 'cartjiapp/images/QRCode.jpeg' %}" width="200">
 
-            <p>Total: ₹{{ product.selling_price }}</p>
+            <p><b>To Pay: ₹{{ product.selling_price }}</b></p>
 
             <input type="file" name="payment_screenshot" class="form-control mb-3" required>
             <input type="text" name="utr" class="form-control mb-2" placeholder="UTR NO." required>
