@@ -270,7 +270,8 @@ def cj_product_add_edit(request, pk=None):
             request.FILES,
             queryset=ProductImage.objects.filter(product=product)
         )
-
+        print("FORM ERRORS:", product_form.errors)
+        print("IMAGE ERRORS:", image_formset.errors)
         if product_form.is_valid() and image_formset.is_valid():
             product = product_form.save()
             product.sizes.set(product_form.cleaned_data["sizes"])
