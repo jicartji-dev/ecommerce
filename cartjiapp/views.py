@@ -228,7 +228,28 @@ def checkout(request, slug):
             status="pending"
         )
         
-        return render(request, "cartjiapp/order_success.html", {"order": order})
+        from urllib.parse import quote
+
+        # 🔥 UPI DETAILS
+        upi_id = "chauhanadarsh432-3@okicici"   # ⚠️ replace with your real UPI ID
+        name = "CartJi"
+
+        amount = request.POST.get("final_price") or product.selling_price
+
+        upi_link = f"upi://pay?pa={upi_id}&pn={name}&am={amount}&cu=INR"
+
+        # 🔥 detect mobile (simple way)
+        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
+
+        if "android" in user_agent or "iphone" in user_agent:
+            return redirect(upi_link)   # 📱 direct open UPI app
+        else:
+            return render(request, "cartjiapp/order_success.html", {
+                "order": order,
+                "upi_link": upi_link   # 💻 show button manually
+            })
+
+
 
     return render(request, "cartjiapp/checkout.html", {
         "product": product,

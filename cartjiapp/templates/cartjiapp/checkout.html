@@ -22,6 +22,17 @@
 
             <h5>Pay via UPI</h5>
             <img src="{% static 'cartjiapp/images/QRCode.jpeg' %}" width="200">
+            <h5>Pay via UPI</h5>
+
+            <!-- 🔥 UPI BUTTON (NEW) -->
+            <a href="upi://pay?pa=yourupi@upi&pn=CartJi&am={{ product.selling_price }}&cu=INR" class="btn btn-primary w-100 mb-3">
+                Pay via UPI App 🚀
+            </a>
+
+            <p class="text-center">OR</p>
+
+            <!-- ✅ YOUR QR (OLD) -->
+            <img src="{% static 'cartjiapp/images/QRCode.jpeg' %}" width="200">
 
             <p>Total: ₹{{ product.selling_price }}</p>
 
