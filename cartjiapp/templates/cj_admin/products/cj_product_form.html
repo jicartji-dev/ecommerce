@@ -126,7 +126,7 @@
 
     <br><br>
 
-    <button class="cj-btn primary">
+    <button class="cj-btn primary" type="submit">
         {% if is_edit %}Update Product{% else %}Save Product{% endif %}
     </button>
 </form>
@@ -146,7 +146,7 @@
 
         newForm.querySelectorAll("input, select").forEach(el => {
             el.value = "";
-            if (el.type ==  = "checkbox") el.checked = false;
+            if (el.type == "checkbox") el.checked = false;
     });
 
     formset.appendChild(newForm);
