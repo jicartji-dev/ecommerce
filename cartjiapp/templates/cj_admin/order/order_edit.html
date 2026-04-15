@@ -3,62 +3,96 @@
 
 <h2>Edit Order – {{ order.order_id }}</h2>
 
-    <form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="cj-form">
     {% csrf_token %}
 
-    <label>Customer Name</label>
-    <input type="text" name="customer_name" value="{{ order.customer_name }}" required>
-    <br>
-    <label>Phone</label>
-    <input type="text" name="phone" value="{{ order.phone }}" required>
-    <br>
-    <label for="">Address</label>
-    <input type="text" name="address" id="" value="{{ order.delivery_address }}">
-    <br>
-    <label>Size</label>
-    <select name="size" required>
-        <option value="">Select Size</option>
-        {% for size in sizes %}
-        <option value="{{ size.name }}" {% if order.size == size.name %}selected{% endif %}>
-            {{ size.name }}
-        </option>
-        {% endfor %}
-    </select>
-    <br>
-    <label>Color</label>
-    <select name="color" required>
-        <option value="">Select Color</option>
-        {% for color in colors %}
-        <option value="{{ color.name }}" {% if order.color == color.name %}selected{% endif %}>
-            {{ color.name }}
-        </option>
-        {% endfor %}
-    </select>
-    <br>
-    <label>Payment Screenshot</label><br>
-    
-    {% if order.payment_screenshot %}
-    <img src="{{ order.payment_screenshot.url }}" width="200">
-    <br>
-    <a href="{{ order.payment_screenshot.url }}" target="_blank">
-        View Full Image
-    </a>
-    {% else %}
-    <p>No screenshot uploaded</p>
-    {% endif %}
-    <br>
-    <label>Status</label>
-    <select name="status">
-        <option value="pending" {% if order.status == "pending" %}selected{% endif %}>Pending</option>
-        <option value="confirmed" {% if order.status == "confirmed" %}selected{% endif %}>Confirmed</option>
-        <option value="paid" {% if order.status == "paid" %}selected{% endif %}>Paid</option>
-        <option value="cancelled" {% if order.status == "cancelled" %}selected{% endif %}>Cancelled</option>
-    </select>
-    <br>
-    <br><br>
-    <button type="submit" class="cj-btn primary">Update Order</button>
-</form>
+    <!-- 👤 CUSTOMER INFO -->
+    <div class="cj-form-card">
+        <h3>Customer Info</h3>
 
-<a href="{% url 'cj_orders' %}">← Back to Orders</a>
+        <div class="cj-form-grid">
+            <div>
+                <label>Name</label>
+                <input type="text" name="customer_name" value="{{ order.customer_name }}" required>
+            </div>
+
+            <div>
+                <label>Phone</label>
+                <input type="text" name="phone" value="{{ order.phone }}" required>
+            </div>
+
+            <div class="full">
+                <label>Address</label>
+                <textarea name="address">{{ order.delivery_address }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📦 PRODUCT DETAILS -->
+    <div class="cj-form-card">
+        <h3>Product Details</h3>
+
+        <div class="cj-form-grid">
+            <div>
+                <label>Size</label>
+                <select name="size" required>
+                    {% for size in sizes %}
+                    <option value="{{ size.name }}" {% if order.size==size.name %}selected{% endif %}>
+                        {{ size.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label>Color</label>
+                <select name="color" required>
+                    {% for color in colors %}
+                    <option value="{{ color.name }}" {% if order.color==color.name %}selected{% endif %}>
+                        {{ color.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- 💰 PAYMENT -->
+    <div class="cj-form-card">
+        <h3>Payment</h3>
+
+        {% if order.payment_screenshot %}
+        <div class="cj-image-card">
+            <img src="{{ order.payment_screenshot.url }}">
+            <p>
+                <a href="{{ order.payment_screenshot.url }}" target="_blank">
+                    View Full Screenshot
+                </a>
+            </p>
+        </div>
+        {% else %}
+        <p>No screenshot uploaded</p>
+        {% endif %}
+    </div>
+
+    <!-- 📊 STATUS -->
+    <div class="cj-form-card">
+        <h3>Status</h3>
+
+        <select name="status">
+            <option value="pending" {% if order.status=="pending" %}selected{% endif %}>Pending</option>
+            <option value="confirmed" {% if order.status=="confirmed" %}selected{% endif %}>Confirmed</option>
+            <option value="paid" {% if order.status=="paid" %}selected{% endif %}>Paid</option>
+            <option value="cancelled" {% if order.status=="cancelled" %}selected{% endif %}>Cancelled</option>
+        </select>
+    </div>
+
+    <!-- 🔘 BUTTONS -->
+    <div style="margin-top:20px;">
+        <button type="submit" class="cj-btn primary">Update Order</button>
+        <a href="{% url 'cj_orders' %}" class="cj-btn">Cancel</a>
+    </div>
+
+</form>
 
 {% endblock %}
