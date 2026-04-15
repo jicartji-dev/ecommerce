@@ -1,4 +1,5 @@
 {% extends 'cartjiapp/base.html' %}
+{% load static %}
 {% block content %}
 
 <div class="container my-5">
@@ -20,7 +21,7 @@
             <textarea name="address" class="form-control mb-3" placeholder="Delivery Address" required></textarea>
 
             <h5>Pay via UPI</h5>
-            <img src="/static/QRCode.png" width="200">
+            <img src="{% static 'cartjiapp/images/QRCode.jpeg' %}" width="200">
 
             <p>Total: ₹{{ product.selling_price }}</p>
 
