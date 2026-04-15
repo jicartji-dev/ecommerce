@@ -264,12 +264,7 @@ def cj_product_add_edit(request, pk=None):
     )
 
     if request.method == "POST":
-        product_form = CJProductCreateForm(
-            instance=product,
-            initial={
-                "sizes": product.sizes.all()
-            }
-        )
+        product_form = CJProductCreateForm(request.POST, instance=product)
         image_formset = ImageFormSet(
             request.POST,
             request.FILES,
@@ -291,7 +286,12 @@ def cj_product_add_edit(request, pk=None):
             return redirect("cj_products")
 
     else:
-        product_form = CJProductCreateForm(instance=product)
+        product_form = CJProductCreateForm(
+            instance=product,
+            initial={
+                "sizes": product.sizes.all()
+            }
+        )
         image_formset = ImageFormSet(
             queryset=ProductImage.objects.filter(product=product)
         )
