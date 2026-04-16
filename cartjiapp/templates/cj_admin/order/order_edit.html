@@ -31,8 +31,12 @@
     <!-- 📦 PRODUCT DETAILS -->
     <div class="cj-form-card">
         <h3>Product Details</h3>
-
+        <div class="full">
+            <label>Product</label>
+            <input type="text" value="{{ order.product.name }}" readonly>
+        </div>
         <div class="cj-form-grid">
+
             <div>
                 <label>Size</label>
                 <select name="size" required>
@@ -60,6 +64,10 @@
     <!-- 💰 PAYMENT -->
     <div class="cj-form-card">
         <h3>Payment</h3>
+        <div style="margin-top:15px;">
+            <label>UTR Number</label>
+            <input type="text" value="{{ order.UTR }}" readonly>
+        </div>
 
         {% if order.payment_screenshot %}
         <div class="cj-image-card">
@@ -73,6 +81,7 @@
         {% else %}
         <p>No screenshot uploaded</p>
         {% endif %}
+
     </div>
 
     <!-- 📊 STATUS -->
