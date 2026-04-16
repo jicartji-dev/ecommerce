@@ -89,9 +89,9 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
                     {% endfor %}
                 </div>
                 {% endif %}
-            <button id="finalOrderBtn" class="btn btn-success w-100 mt-3">
-                Proceed to Checkout
-            </button>
+                <button type="button" class="btn btn-success btn-lg product-cta" onclick="goToCheckout('{{ product.slug }}')">
+                    Buy Now
+                </button>
 
                 <!-- <form method="POST" action="{% url 'buy_on_whatsapp' product.slug %}">
                     {% csrf_token %}
@@ -144,7 +144,7 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
             <p id="couponModalBody" class="mt-2"></p>
 
             <button id="finalOrderBtn" class="btn btn-success w-100 mt-3" style="display:none">
-                Order on WhatsApp
+                Proceed to Checkout
             </button>
 
         </div>
