@@ -70,8 +70,8 @@
         </div>
 <br>
         {% if order.payment_screenshot %}
-        <div class="cj-image-card h-auto">
-            <img src="{{ order.payment_screenshot.url }}">
+        <div class="cj-image-card">
+            <img src="{{ order.payment_screenshot.url }}" style="width: 100%; max-width: 500px; height: auto; border-radius: 10px;">
             <p>
                 <a href="{{ order.payment_screenshot.url }}" target="_blank">
                     View Full Screenshot
