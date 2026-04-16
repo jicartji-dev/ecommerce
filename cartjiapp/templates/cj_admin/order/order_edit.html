@@ -68,10 +68,10 @@
             <label>UTR Number</label>
             <input type="text" value="{{ order.UTR }}" readonly>
         </div>
-
+<br>
         {% if order.payment_screenshot %}
-        <div class="cj-image-card">
-            <img src="{{ order.payment_screenshot.url }}" width="200">
+        <div class="cj-image-card h-auto">
+            <img src="{{ order.payment_screenshot.url }}">
             <p>
                 <a href="{{ order.payment_screenshot.url }}" target="_blank">
                     View Full Screenshot
