@@ -28,9 +28,9 @@
             <p class="text-center">OR</p>
 
             <!-- ✅ YOUR QR (OLD) -->
-            <img src="{% static 'cartjiapp/images/QRCode.jpeg' %}" width="200">
-
-            <p><b>To Pay: ₹{{ product.selling_price }}</b></p>
+            <center><img src="{% static 'cartjiapp/images/QRCode.jpeg' %}" width="200">
+                <p><b>To Pay: ₹{{ product.selling_price }}</b></p>
+            </center>
 
             <input type="file" name="payment_screenshot" class="form-control mb-3" required>
             <input type="text" name="utr" class="form-control mb-2" placeholder="UTR NO." required>
