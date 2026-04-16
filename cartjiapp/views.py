@@ -250,11 +250,12 @@ def checkout(request, slug):
             })
 
 
-
+    price = request.GET.get("price") or product.selling_price
     return render(request, "cartjiapp/checkout.html", {
         "product": product,
         "size": size,
-        "color": color
+        "color": color,
+        "final_price": price
     })
 
 

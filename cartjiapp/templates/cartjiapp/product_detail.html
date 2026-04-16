@@ -152,21 +152,43 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 </div>
 
 
-
 <script>
     function goToCheckout(slug) {
 
-        const variantMsg = document.getElementById("variantMessage");
+            const variantMsg = document.getElementById("variantMessage");
+            const couponCode = document.getElementById("couponCode").value.trim();
 
-        if (!selectedSize || !selectedColor) {
-            variantMsg.innerText = "⚠ Please select size & color to continue.";
-            variantMsg.style.display = "block";
-            return;
+            if (!selectedSize || !selectedColor) {
+                variantMsg.innerText = "⚠ Please select size & color to continue.";
+                variantMsg.style.display = "block";
+                return;
+            }
+
+            // 🔥 IF NO COUPON → normal redirect
+            if (!couponCode) {
+                window.location.href = `/checkout/${slug}/?size=${selectedSize}&color=${selectedColor}`;
+                return;
+            }
+
+            // 🔥 IF COUPON EXISTS → CHECK API
+            fetch(`/check-coupon/?code=${encodeURIComponent(couponCode)}`)
+                .then(res => res.json())
+                .then(data => {
+
+                    if (!data.valid) {
+                        alert("Invalid Coupon ❌");
+                        return;
+                    }
+
+                    const basePrice = parseFloat("{{ product.selling_price }}");
+                    const discountAmount = Math.round(basePrice * data.discount / 100);
+                    const finalPrice = basePrice - discountAmount;
+
+                    // 🔥 redirect WITH discounted price
+                    window.location.href =
+                        `/checkout/${slug}/?size=${selectedSize}&color=${selectedColor}&price=${finalPrice}&coupon=${couponCode}`;
+                });
         }
-
-        // redirect with data
-        window.location.href = `/checkout/${slug}/?size=${selectedSize}&color=${selectedColor}`;
-    }
 </script>
 
 <script>

@@ -10,7 +10,7 @@
         <h4>{{ product.name }}</h4>
         <h6>Selected Size: {{ size }}</h6>
         <h6>Selected Color: {{ color }}</h6>
-        <p>Price: ₹{{ product.selling_price }}</p>
+        <p>Price: ₹{{ final_price }}</p>
 
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -21,7 +21,7 @@
             <textarea name="address" class="form-control mb-3" placeholder="Delivery Address" required></textarea>
 
             <!-- 🔥 UPI BUTTON (NEW) -->
-            <a href="upi://pay?pa=chauhanadarsh432-3@okicici&pn=CartJi&am={{ product.selling_price }}&cu=INR" class="btn btn-primary w-100 mb-3">
+            <a href="upi://pay?pa=chauhanadarsh432-3@okicici&pn=CartJi&am={{ final_price }}&cu=INR" class="btn btn-primary w-100 mb-3">
                 Pay via UPI App 🚀
             </a>
 
@@ -29,7 +29,7 @@
 
             <!-- ✅ YOUR QR (OLD) -->
             <center><img src="{% static 'cartjiapp/images/QRCode.jpeg' %}" width="200">
-                <p><b>To Pay: ₹{{ product.selling_price }}</b></p>
+                <p><b>To Pay: ₹{{ final_price }}</b></p>
             </center>
 
             <input type="file" name="payment_screenshot" class="form-control mb-3" required>
@@ -37,7 +37,7 @@
             
             <input type="hidden" name="size" value="{{ size }}">
             <input type="hidden" name="color" value="{{ color }}">
-            <input type="hidden" name="final_price" value="{{ product.selling_price }}">
+            <input type="hidden" name="final_price" value="{{ final_price }}">
             {% if messages %}
             {% for message in messages %}
             <div class="alert alert-danger">
