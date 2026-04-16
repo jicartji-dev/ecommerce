@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const track = document.querySelector(".hero-visual-track");
     const slides = Array.from(document.querySelectorAll(".hero-visual-track img"));
 
-    if (!track || slides.length ==  = 0) return;
+    if (!track || slides.length == 0) return;
 
 let index = 0;
 const total = slides.length;
@@ -31,11 +31,11 @@ function updateSlides() {
     slides.forEach((slide, i) => {
         slide.classList.remove("active", "prev", "next");
 
-        if (i ==  = index) {
+        if (i == index) {
         slide.classList.add("active");
-    } else if (i ==  = index - 1 || (index ==  = 0 && i ==  = total - 1)) {
+    } else if (i == index - 1 || (index == 0 && i == total - 1)) {
         slide.classList.add("prev");
-    } else if (i ==  = index + 1 || (index ==  = total - 1 && i ==  = 0)) {
+    } else if (i == index + 1 || (index == total - 1 && i == 0)) {
         slide.classList.add("next");
     }
 });
