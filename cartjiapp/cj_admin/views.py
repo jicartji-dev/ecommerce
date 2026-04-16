@@ -259,7 +259,7 @@ def cj_product_add_edit(request, pk=None):
     ImageFormSet = modelformset_factory(
         ProductImage,
         form=CJProductImageForm,
-        extra=1,
+        extra=0,
         can_delete=True
     )
 
@@ -272,7 +272,7 @@ def cj_product_add_edit(request, pk=None):
         )
         print("FORM ERRORS:", product_form.errors)
         print("IMAGE ERRORS:", image_formset.errors)
-        if product_form.is_valid() and image_formset.is_valid():
+        if product_form.is_valid():
             product = product_form.save()
             product.sizes.set(product_form.cleaned_data["sizes"])
 
