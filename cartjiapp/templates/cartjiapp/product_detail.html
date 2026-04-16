@@ -138,8 +138,7 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
 <div class="modal fade" id="couponResultModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-4">
-
+<div class="modal-content p-4 text-center" style="border-radius:15px;">
             <h5 id="couponModalTitle"></h5>
             <p id="couponModalBody" class="mt-2"></p>
 
@@ -239,8 +238,18 @@ Buy {{ product.name }} at best price. Order directly on WhatsApp.
 
                     titleEl.innerText = "Apply Coupon 🎉";
                     bodyEl.innerHTML = `
-                    <strong>Final Price:</strong> ₹${finalPrice}
-                `;
+    <div style="text-align:center">
+        <p style="font-size:14px; color:#777;">Original Price</p>
+        <h5 style="text-decoration:line-through;">₹${basePrice}</h5>
+
+        <p style="font-size:14px; color:green;">Discount Applied</p>
+        <h5>-${discountAmount}</h5>
+
+        <hr>
+
+        <h4 style="color:#198754;">Final Price: ₹${finalPrice}</h4>
+    </div>
+`;
 
                     orderBtn.style.display = "block";
 
