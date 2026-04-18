@@ -63,6 +63,11 @@ class CJProductImageForm(forms.ModelForm):
         model = ProductImage
         fields = ["image", "color"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # 🔥 SORT COLORS ALPHABETICALLY
+        self.fields["color"].queryset = Color.objects.all().order_by("name")
 
 # -------------------------
 # ORDER FORM (FIXED)
