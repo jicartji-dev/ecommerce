@@ -137,8 +137,15 @@
         const totalForms = document.getElementById("id_form-TOTAL_FORMS");
 
         let count = parseInt(totalForms.value);
-        let newForm = formset.children[0].cloneNode(true);
+        let forms = formset.children;
 
+        if (forms.length === 0) {
+            alert("No form available to clone");
+            return;
+        }
+
+        let newForm = forms[0].cloneNode(true);
+        
         newForm.innerHTML = newForm.innerHTML.replaceAll(
             /form-(\d+)-/g,
             `form-${count}-`

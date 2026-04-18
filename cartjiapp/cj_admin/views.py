@@ -259,7 +259,7 @@ def cj_product_add_edit(request, pk=None):
     ImageFormSet = modelformset_factory(
         ProductImage,
         form=CJProductImageForm,
-        extra=0,
+        extra=1,
         can_delete=True
     )
 
