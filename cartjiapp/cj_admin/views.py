@@ -287,15 +287,19 @@ def cj_product_add_edit(request, pk=None):
             return redirect("cj_products")
 
     else:
-        product_form = CJProductCreateForm(
-            instance=product,
-            initial={
-                "sizes": product.sizes.all()
-            }
-        )
-        image_formset = ImageFormSet(
-            queryset=ProductImage.objects.filter(product=product)
-        )
+        if product:
+            product_form = CJProductCreateForm(
+                instance=product,
+                initial={"sizes": product.sizes.all()}
+            )
+            image_formset = ImageFormSet(
+                queryset=ProductImage.objects.filter(product=product)
+            )
+        else:
+            product_form = CJProductCreateForm()
+            image_formset = ImageFormSet(
+                queryset=ProductImage.objects.none()
+            )
 
     return render(
         request,
